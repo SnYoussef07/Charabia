@@ -6,7 +6,7 @@
 package g41385.charabia.view;
 
 import g41385.charabia.model.Bag;
-import java.util.Random;
+import g41385.charabia.model.Table;
 
 /**
  *
@@ -16,6 +16,9 @@ public class Main {
 
     public static void main(String[] args) {
         Bag bag = new Bag();
-        System.out.println(bag);
+        Table tab = new Table();
+        tab.initTable();
+        
+        System.out.println(tab);
     }
 }
