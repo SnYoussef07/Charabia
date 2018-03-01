@@ -24,7 +24,7 @@ public class Tile {
 
     @Override
     public String toString() {
-        return "|"+letter+"||"+scoring+"|"; // a corrig
+        return "["+letter+"|"+scoring+"]"; // a corrig
     }
     
     
