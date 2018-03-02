@@ -4,17 +4,17 @@ package g41385.charabia.model;
  *
  * @author 41385
  */
-public class Tile {
+class Tile {
 
-    private final char letter;
+    private final MyCharacter letter;
     private final  int scoring;
 
-    public Tile(char letter, int scoring) {
+    public Tile(MyCharacter letter, int scoring) {
         this.letter = letter;
         this.scoring = scoring;
     }
 
-    public char getLetter() {
+    public MyCharacter getLetter() {
         return letter;
     }
 
@@ -24,7 +24,7 @@ public class Tile {
 
     @Override
     public String toString() {
-        return "["+letter+"|"+scoring+"]"; // a corrig
+        return "["+letter.getMyLetter()+"|"+scoring+"]";
     }
     
     
