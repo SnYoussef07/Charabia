@@ -6,45 +6,58 @@ import java.util.List;
 import java.util.Random;
 
 /**
+ * represents the bag of the game
  *
  * @author 41385
  */
-public class Bag {
+class Bag {
 
-    private List<Tile> myBag;
+    private final List<Tile> myBag;
     private int nbrRandom;
-    private char c;
+    private MyCharacter myChar;
 
+    /**
+     * Cnnstruct class Bag
+     */
     Bag() {
         this.myBag = new ArrayList();
         initBag();
     }
 
+    /**
+     * initialize the Bag
+     */
     private void initBag() {
         Random rand = new Random();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 65; i < 122; i++) { //A To Z
+            myChar = new MyCharacter((char) i);
             nbrRandom = 1 + (int) (Math.random() * ((10 - 1) + 1));
-            /*c = (char) (rand.nextInt(26) + 97);
-            this.myBag.add(new Tile(c, nbrRandom));*/
-            //this.myBag.add(new Tile(new MyCharacter('A', 9), nbrRandom));
-            for (int j = 65; j < 122; j++) {
-                MyCharacter mm = new MyCharacter((char) j);
-                nbrRandom = 1 + (int) (Math.random() * ((10 - 1) + 1));
-                for(int v=0;v<mm.getMultip();v++){
-                    this.myBag.add(new Tile(mm, 2));
-                }
+            for (int j = 0; j < myChar.getMultip(); j++) {
+                this.myBag.add(new Tile(myChar, nbrRandom));
             }
         }
     }
 
+    /**
+     * Allows to mix the Deck.
+     */
     public void shuffle() {
         Collections.shuffle(myBag);
     }
 
+    /**
+     * Allows you to draw a Tile
+     *
+     * @return Tile
+     */
     public Tile draw() {
         return this.myBag.remove(0);
     }
 
+    /**
+     * return boolean is Empty.
+     * @return boolean
+     */
     public boolean bagIsEmpty() {
         return this.myBag.isEmpty();
     }

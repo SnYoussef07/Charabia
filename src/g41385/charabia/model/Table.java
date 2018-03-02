@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * represents the Table of the game
  * @author 41385
  */
 public class Table {
@@ -12,12 +12,18 @@ public class Table {
     private List<Tile> myTable;
     private Bag bag;
 
+    /**
+     * Construct class Table
+     */
     public Table() {
         myTable = new ArrayList();
         bag = new Bag();
     }
     
-    public void initTable(){
+    /**
+     * initializes the table with the Tile
+     */
+    public void initTable(){ /// a coorige enlever que les jeton du gagnat !!!!!!!!!!!!!!!!
         bag.shuffle();
         myTable.clear();
         for(int i=0;i<10;i++){

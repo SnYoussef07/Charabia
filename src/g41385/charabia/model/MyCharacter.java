@@ -1,19 +1,25 @@
 package g41385.charabia.model;
 /**
- *
+ * represents a character and its appearance number
  * @author g41385
  */
 class MyCharacter {
     
     private final char myLetter;
     private int multip;
-
+    /**
+     * COnstruct class MyCharacter
+     * @param myLetter char of the class
+     */
     MyCharacter(char myLetter) {
         this.myLetter = myLetter;
         init();
     }
     
-    public void init(){
+    /**
+     * initializes the number of repetitions according to the letter
+     */
+    private void init(){
         switch(myLetter){
             case 'A' : multip=9;break;
             case 'B' : multip=2;break;
@@ -43,13 +49,14 @@ class MyCharacter {
             case 'Z' : multip=1;break;  
         }
     }
-    public char getMyLetter() {
-        return myLetter;
-    }
-
-    public int getMultip() {
-        return multip;
-    }
-    
-    
+    /**
+     * return myLetter
+     * @return char 
+     */
+    public char getMyLetter() {return myLetter;}
+    /**
+     * Return multip
+     * @return int 
+     */
+    public int getMultip() {return multip;}
 }

@@ -1,7 +1,7 @@
 package g41385.charabia.model;
 
 /**
- *
+ * represents the game tile
  * @author 41385
  */
 class Tile {
@@ -9,18 +9,30 @@ class Tile {
     private final MyCharacter letter;
     private final  int scoring;
 
-    public Tile(MyCharacter letter, int scoring) {
+    /**
+     * Cnnstruct class Tile
+     * @param letter
+     * @param scoring 
+     */
+    Tile(MyCharacter letter, int scoring) {
         this.letter = letter;
         this.scoring = scoring;
     }
-
-    public MyCharacter getLetter() {
-        return letter;
-    }
-
-    public int getScoring() {
-        return scoring;
-    }
+    /**
+     * Return letter
+     * @return MyCharacter
+     */
+    public MyCharacter getLetter() {return letter;}
+    /**
+     * Return scoring
+     * @return int
+     */
+    public int getScoring() {return scoring;}
+    /**
+     * Return character Tile
+     * @return Char
+     */
+    public char getChar(){return this.letter.getMyLetter();}
 
     @Override
     public String toString() {
