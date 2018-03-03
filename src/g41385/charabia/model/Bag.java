@@ -29,7 +29,7 @@ class Bag {
      */
     private void initBag() {
         Random rand = new Random();
-        for (int i = 65; i < 122; i++) { //A To Z
+        for (int i = 65; i < 90; i++) { //A To Z
             myChar = new MyCharacter((char) i);
             nbrRandom = 1 + (int) (Math.random() * ((10 - 1) + 1));
             for (int j = 0; j < myChar.getMultip(); j++) {
@@ -60,6 +60,19 @@ class Bag {
      */
     public boolean bagIsEmpty() {
         return this.myBag.isEmpty();
+    }
+    
+    /**
+     * Adds a character and the number of times it appears
+     * @param letter
+     * @param multip 
+     */
+    public void addTile(char letter , int multip){
+        myChar = new MyCharacter(letter);
+        nbrRandom = 1 + (int) (Math.random() * ((10 - 1) + 1));
+        for(int i=0;i<multip;i++){
+            this.myBag.add(new Tile(new MyCharacter(letter),nbrRandom));
+        }
     }
 
     @Override
