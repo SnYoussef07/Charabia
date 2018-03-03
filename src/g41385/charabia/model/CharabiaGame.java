@@ -1,39 +1,32 @@
 package g41385.charabia.model;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 /**
  *
  * @author 41385
  */
-public abstract class CharabiaGame implements Charabia{ //enlever abstract!!!
+public class CharabiaGame implements Charabia{ 
 
-    /*@Override
-    public Player joinGame(String playerName) {
+    private Table table;
+    private Bag bag;
+    private Dictionary dictionnary;
+    private boolean isOver = false;
+
+    public CharabiaGame() throws FileNotFoundException, IOException {
+        this.table = new Table();
+        this.bag = new Bag();
+        this.dictionnary = new Dictionary();
     }
-    @Override
-    public List<Player> getPlayers() {
-    }
+    
+    
+  
     @Override
     public List<Tile> getTiles() {
+        return table.getMyTable();
     }
-    @Override
-    public void play(Player player, String word) {
-    }
-    @Override
-    public List<Player> getRoundWinners() {
-    }
-    @Override
-    public List<Player> getWinners() {
-    }
-    @Override
-    public void nextRound() {
-    }
-    @Override
-    public boolean isRoundOver() {
-    }
-    @Override
-    public boolean isGameOver() {
-    }*/
+    
     
 }

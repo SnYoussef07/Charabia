@@ -9,6 +9,7 @@ package g41385.charabia.model;
 import g41385.charabia.model.Bag;
 import g41385.charabia.model.Table;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  *
@@ -16,7 +17,7 @@ import java.io.FileNotFoundException;
  */
 public class Main {
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
         /*Bag bag = new Bag();
         System.out.println(bag);*/
         
@@ -28,9 +29,7 @@ public class Main {
         System.out.println(tab);*/
         
         
-        /*Dictionnary dc = new Dictionnary();
-        for(String s : dc.getMyDico()){
-            System.out.println(s);
-        }*/
+        /*Dictionary dc = new Dictionary();
+        System.out.println(dc);*/
     }
 }

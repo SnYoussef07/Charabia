@@ -31,6 +31,12 @@ public class Table {
         }
     }
 
+    public List<Tile> getMyTable() {
+        List<Tile> tile = this.myTable;
+        return  tile;
+    }
+    
+
     @Override
     public String toString() {
         String str="";
