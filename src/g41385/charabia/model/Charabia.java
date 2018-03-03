@@ -34,7 +34,7 @@ public interface Charabia {
      * @throws IllegalArgumentException if there is already a player with the
      * same name.
      */
-    //public Player joinGame(String playerName);*************************************************************************
+    public void joinGame(String playerName);
 
     
     /**
@@ -43,7 +43,7 @@ public interface Charabia {
      * and contains 1 or 2 players otherwise.
      * @return the list of players.
      */
-    //public List<Player> getPlayers() ;*************************************************************************
+    public List<Player> getPlayers() ;
     
     /** 
      * Gets the list of current tiles from which players search for the best word.
@@ -67,7 +67,7 @@ public interface Charabia {
      * @param word the word proposed by the player.
      * @throws IllegalStateException if the player already played
      */
-    //public void play(Player player, String word);*************************************************************************
+    public void play(Player player, String word);
 
     /**
      * The winners of the round are the player that proposed the longest word.

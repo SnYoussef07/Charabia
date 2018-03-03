@@ -74,6 +74,16 @@ class Bag {
             this.myBag.add(new Tile(new MyCharacter(letter),nbrRandom));
         }
     }
+    /**
+     * Return myBag
+     * @return List<Tile
+     */
+    public List<Tile> getMyBag() {
+        List<Tile> tile = this.myBag;
+        return tile;
+    }
+    
+    
 
     @Override
     public String toString() {
