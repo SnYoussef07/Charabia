@@ -14,6 +14,7 @@ public class Player {
             throw new IllegalArgumentException("name cannot be null");
         }
         this.name = name;
+        this.score = 0;
     }
 
     /**

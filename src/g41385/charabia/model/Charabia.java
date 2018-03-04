@@ -68,6 +68,7 @@ public interface Charabia {
      * @throws IllegalStateException if the player already played
      */
     public void play(Player player, String word);
+    
 
     /**
      * The winners of the round are the player that proposed the longest word.

@@ -12,47 +12,78 @@ import java.util.List;
  *
  * @author 41385
  */
-public class Dictionary {
+class Dictionary {
 
     private List<String> myDico;
-    File file = new File("Dictionary");
+    private File file = new File("Dictionary");
+    private String path = file.getAbsolutePath();
+    private BufferedReader br;
 
-    public Dictionary() throws FileNotFoundException, IOException {
+    Dictionary() throws FileNotFoundException, IOException {
         this.myDico = new ArrayList();
-       
-        
-        String path = file.getAbsolutePath();
-        BufferedReader br = new BufferedReader(new FileReader(path += ".txt"));
-        String line;
-        while ((line = br.readLine()) != null) {
-            myDico.add(br.readLine());
+        initDictionary();
+    }
+
+    /**
+     * initialize the dictionary and add it to the list
+     *
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    private void initDictionary() throws FileNotFoundException, IOException {
+        try {
+            br = new BufferedReader(new FileReader(path += ".txt"));
+            String line;
+            while ((line = br.readLine()) != null) {
+                myDico.add(br.readLine());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        br.close();
 
     }
-    
-    public boolean findWord(String word){
+
+    /**
+     * return a boolean if the word is find
+     *
+     * @param word
+     * @return
+     */
+    boolean findWord(String word) {
+        if (word == null) {
+            throw new IllegalArgumentException("word cannot be null");
+        }
         boolean ok = false;
-        for(String s : myDico){
-            if(word.equals(s)){
+        for (String s : myDico) {
+            if (word.equals(s)) {
                 ok = true;
             }
         }
         return ok;
     }
 
+    /**
+     * Return myDico
+     *
+     * @return List<String
+     */
+    List<String> getMyDico() {
+        List<String> copyDico = this.myDico;
+        return copyDico;
+    }
+
     @Override
     public String toString() {
         String ss = null;
-        for(String s : myDico){
+        for (String s : myDico) {
             ss = ss + s + "\n";
         }
         return ss;
     }
-
-    
-    public List<String> getMyDico() { ///Mauvais faire une copie a envoyé 
-        return myDico;
-    }
-
 }

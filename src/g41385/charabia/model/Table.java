@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author 41385
  */
-public class Table {
+class Table {
 
     private List<Tile> myTable;
     private Bag bag;
@@ -16,23 +16,32 @@ public class Table {
     /**
      * Construct class Table
      */
-    public Table() {
+    Table(Bag bag) {
         myTable = new ArrayList();
-        bag = new Bag();
+        this.bag = bag;
         initTable();
     }
 
     /**
      * initializes the table with the Tile
      */
-    public void initTable() {
+    void initTable() {
         bag.shuffle();
         for (int i = 0; i < 10; i++) {
             myTable.add(bag.draw());
         }
     }
 
-    public boolean ifExists(String word) {
+    /**
+     * returns a boolean that says if the proposed word exists in the table
+     *
+     * @param word
+     * @return
+     */
+    boolean ifExists(String word) {
+        if (word == null) {
+            throw new IllegalArgumentException("word cannot be null");
+        }
         char[] charWord = word.toCharArray();
         List<Character> copyTableCHar = new ArrayList();
         boolean okProfond = false;
@@ -46,6 +55,7 @@ public class Table {
                     if (charWord[i] == copyTableCHar.get(j)) {
                         okProfond = true;
                         copyTableCHar.remove(j);
+                        break;
                     }
                 }
                 if (okProfond == false) {
@@ -57,7 +67,34 @@ public class Table {
         return okFacade;
     }
 
-    public List<Tile> getMyTable() {
+    /**
+     * refresh the table according to the winner's word
+     * @param winWord 
+     */
+    void refreshTable(String winWord) {
+        if (winWord == null) {
+            throw new IllegalArgumentException("winWord cannot be null");
+        }
+        char[] charWord = winWord.toCharArray();
+        for (int i = 0; i < charWord.length; i++) {
+            for (int j = 0; j < this.myTable.size(); j++) {
+                if(charWord[i] == myTable.get(j).getChar()){
+                    myTable.remove(j);
+                    break;
+                }
+            }
+        }
+        while(myTable.size() < 10){
+            myTable.add(bag.draw());
+        }
+    }
+
+    /**
+     * Return myTable
+     *
+     * @return List<Tile
+     */
+    List<Tile> getMyTable() {
         List<Tile> tile = this.myTable;
         return tile;
     }
