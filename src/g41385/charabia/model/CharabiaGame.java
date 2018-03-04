@@ -42,6 +42,11 @@ public class CharabiaGame implements Charabia{
         if(state == State.STARTED){
             
         }
+        if(dictionnary.findWord(word)){
+            
+        }
+        
+        
     }
 
     @Override

@@ -15,6 +15,9 @@ class Tile {
      * @param scoring 
      */
     Tile(MyCharacter letter, int scoring) {
+        if (letter == null || scoring < 0) {
+            throw new IllegalArgumentException("letter cannot be null and scoring cannot be less than");
+        }
         this.letter = letter;
         this.scoring = scoring;
     }

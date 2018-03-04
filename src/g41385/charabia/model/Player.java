@@ -1,7 +1,7 @@
 package g41385.charabia.model;
 
 /**
- *
+ * represents the PLayer
  * @author 41385
  */
 public class Player {
@@ -40,6 +40,9 @@ public class Player {
      * @param score
      */
     public void addScore(int score) {
+        if (score < 0) {
+            throw new IllegalArgumentException("score is negative");
+        }
         this.score += score;
     }
 

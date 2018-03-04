@@ -2,14 +2,11 @@ package g41385.charabia.model;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  *
@@ -32,6 +29,16 @@ public class Dictionary {
         }
         br.close();
 
+    }
+    
+    public boolean findWord(String word){
+        boolean ok = false;
+        for(String s : myDico){
+            if(word.equals(s)){
+                ok = true;
+            }
+        }
+        return ok;
     }
 
     @Override

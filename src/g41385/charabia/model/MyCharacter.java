@@ -12,6 +12,9 @@ class MyCharacter {
      * @param myLetter char of the class
      */
     MyCharacter(char myLetter) {
+        if (myLetter == ' ') {
+            throw new IllegalArgumentException("myLetter can not be empty");
+        }
         this.myLetter = myLetter;
         init();
     }

@@ -41,7 +41,7 @@ class Bag {
     /**
      * Allows to mix the Deck.
      */
-    public void shuffle() {
+    void shuffle() {
         Collections.shuffle(myBag);
     }
 
@@ -50,7 +50,7 @@ class Bag {
      *
      * @return Tile
      */
-    public Tile draw() {
+    Tile draw() {
         return this.myBag.remove(0);
     }
 
@@ -58,7 +58,7 @@ class Bag {
      * return boolean is Empty.
      * @return boolean
      */
-    public boolean bagIsEmpty() {
+    boolean bagIsEmpty() {
         return this.myBag.isEmpty();
     }
     
@@ -67,7 +67,10 @@ class Bag {
      * @param letter
      * @param multip 
      */
-    public void addTile(char letter , int multip){
+    void addTile(char letter , int multip){
+        if (multip < 0 || letter == ' ') {
+            throw new IllegalArgumentException("multip is negative and letter can not be empty");
+        }
         myChar = new MyCharacter(letter);
         nbrRandom = 1 + (int) (Math.random() * ((10 - 1) + 1));
         for(int i=0;i<multip;i++){
@@ -78,7 +81,7 @@ class Bag {
      * Return myBag
      * @return List<Tile
      */
-    public List<Tile> getMyBag() {
+    List<Tile> getMyBag() {
         List<Tile> tile = this.myBag;
         return tile;
     }
