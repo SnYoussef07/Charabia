@@ -24,6 +24,7 @@ public class CharabiaGame implements Charabia {
         this.dictionnary = new Dictionary();
     }
 
+    
     @Override
     public List<Tile> getTiles() {
         return bag.getMyBag();
