@@ -75,6 +75,7 @@ public class CharabiaGame implements Charabia {
             throw new IllegalStateException("is game is not in ROUND_OVER state");
         }
         state = State.STARTED;
+        resetIsPlay(); // met sit les joueur on jouer a false
     }
 
     /**
