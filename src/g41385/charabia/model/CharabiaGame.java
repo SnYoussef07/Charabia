@@ -14,7 +14,7 @@ public class CharabiaGame implements Charabia {
     private Table table;
     private Bag bag;
     private Dictionary dictionnary;
-    private State state = State.CONFIGURE;
+    private State state ;
     private List<Player> players;
     
     public CharabiaGame() throws FileNotFoundException, IOException {
@@ -22,12 +22,14 @@ public class CharabiaGame implements Charabia {
         this.bag = new Bag();
         this.table = new Table(bag);
         this.dictionnary = new Dictionary();
+        this.state = State.CONFIGURE;
     }
 
+    // si y'a egaliter les 2 gagne (calcu scor)
     
     @Override
-    public List<Tile> getTiles() {
-        return bag.getMyBag();
+    public Table getTiles() {  /// car connait pas table comme publique
+        return table;
     }
 
     @Override
@@ -35,8 +37,8 @@ public class CharabiaGame implements Charabia {
         if (state == State.STARTED) {
            
         }
-        if (dictionnary.findWord(word) || table.ifExists(word)) {
-
+        if (table.ifExists(word) || dictionnary.findWord(word)) {
+            // on met le mot proposer dans player
         }
     }
 

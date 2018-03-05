@@ -53,7 +53,7 @@ public interface Charabia {
      * @return the list of current tiles.
      * @throws IllegalStateException when game state is not STARTED
      */
-    public List<Tile> getTiles();
+    public Table getTiles();
 
     /**
      * A player proposes a word.
