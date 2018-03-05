@@ -34,7 +34,7 @@ public interface Charabia {
      * @throws IllegalArgumentException if there is already a player with the
      * same name.
      */
-    public void joinGame(String playerName);
+    public Player joinGame(String playerName);
 
     
     /**

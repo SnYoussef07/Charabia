@@ -8,12 +8,14 @@ public class Player {
 
     private String name;
     private int score;
+    private String wordProposed;
 
     public Player(String name) {
         if (name == null) {
             throw new IllegalArgumentException("name cannot be null");
         }
         this.name = name;
+        this.wordProposed = "";
         this.score = 0;
     }
 
@@ -35,6 +37,21 @@ public class Player {
         return score;
     }
 
+    /**
+     * Return wordProposed
+     * @return String
+     */
+    public String getWordProposed() {
+        return wordProposed;
+    }
+    /**
+     * set word proposed
+     * @param wordProposed 
+     */
+    public void setWordProposed(String wordProposed) {
+        this.wordProposed = wordProposed;
+    }
+    
     /**
      * Increment the scor.
      *
