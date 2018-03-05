@@ -9,6 +9,7 @@ public class Player {
     private String name;
     private int score;
     private String wordProposed;
+    private boolean isPlay;
 
     public Player(String name) {
         if (name == null) {
@@ -17,6 +18,7 @@ public class Player {
         this.name = name;
         this.wordProposed = "";
         this.score = 0;
+        this.isPlay = false;
     }
 
     /**
@@ -64,4 +66,24 @@ public class Player {
         this.score += score;
     }
 
+    /**
+     * Return isplay
+     * @return boolean
+     */
+    public boolean getIsPlay() {
+        return isPlay;
+    }
+
+    public void setIsPlay(boolean isPlay) {
+        this.isPlay = isPlay;
+    }
+    
+    /**
+     * Reset is play
+     */
+    public void rsetIsPlay() {
+        this.isPlay = false;
+    }
+    
+    
 }

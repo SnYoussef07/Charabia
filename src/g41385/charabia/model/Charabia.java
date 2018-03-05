@@ -77,7 +77,7 @@ public interface Charabia {
      * @return the list of last round winners.
      * @throws IllegalStateException if game is not in ROUND_OVER state.
      */
-    //public List<Player> getRoundWinners();*************************************************************************
+    public List<Player> getRoundWinners();
    
 
     /**
@@ -94,7 +94,7 @@ public interface Charabia {
      * 
      * @throws IllegalStateException is game is not in ROUND_OVER state.
      */
-    //public void nextRound() ;*************************************************************************
+    public void nextRound() ;
 
     
     /**
