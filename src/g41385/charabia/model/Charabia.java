@@ -84,7 +84,7 @@ public interface Charabia {
      * The winners of the round are the player that play the longest word.
      * @return 
      */
-    //public List<Player> getWinners();*************************************************************************
+    public List<Player> getWinners(); //??
     
     
     /**
@@ -101,14 +101,14 @@ public interface Charabia {
      * true if the round is over but game is not over.
      * @return true if round is over.
      */
-    //public boolean isRoundOver();*************************************************************************
+    public boolean isRoundOver();
 
     
     /**
      * true when game is over.
      * @return true if game is over.
      */
-    //public boolean isGameOver() ;*************************************************************************
+    public boolean isGameOver() ;
 
     
 }

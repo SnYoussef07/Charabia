@@ -12,6 +12,7 @@ class Table {
 
     private List<Tile> myTable;
     private Bag bag;
+    private boolean ifNotFull;
 
     /**
      * Construct class Table
@@ -19,6 +20,7 @@ class Table {
     Table(Bag bag) {
         myTable = new ArrayList();
         this.bag = bag;
+        ifNotFull = false;
         initTable();
     }
 
@@ -69,7 +71,8 @@ class Table {
 
     /**
      * refresh the table according to the winner's word
-     * @param winWord 
+     *
+     * @param winWord
      */
     void refreshTable(String winWord) {
         if (winWord == null) {
@@ -78,14 +81,18 @@ class Table {
         char[] charWord = winWord.toCharArray();
         for (int i = 0; i < charWord.length; i++) {
             for (int j = 0; j < this.myTable.size(); j++) {
-                if(charWord[i] == myTable.get(j).getChar()){
+                if (charWord[i] == myTable.get(j).getChar()) {
                     myTable.remove(j);
                     break;
                 }
             }
         }
-        while(myTable.size() < 10){
-            myTable.add(bag.draw());
+        if( ((bag.getMyBag().size()-1) + (myTable.size()-1)) < 10) {
+            ifNotFull = true;
+        }else{
+             while (myTable.size() < 10) {
+                myTable.add(bag.draw());
+            }
         }
     }
 
@@ -98,6 +105,11 @@ class Table {
         List<Tile> tile = this.myTable;
         return tile;
     }
+
+    public boolean getIfNotFull() {
+        return ifNotFull;
+    }
+    
 
     @Override
     public String toString() {

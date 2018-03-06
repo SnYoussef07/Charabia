@@ -16,6 +16,7 @@ public class CharabiaGame implements Charabia {
     private Dictionary dictionnary;
     private State state;
     private List<Player> players;
+    private int current;
 
     public CharabiaGame() throws FileNotFoundException, IOException {
         this.players = new ArrayList<>();
@@ -31,17 +32,19 @@ public class CharabiaGame implements Charabia {
     }
 
     @Override
-    public void play(Player player, String word) { 
+    public void play(Player player, String word) {
         if (state != State.STARTED) {
             throw new IllegalStateException("the player already played");
         }
-        if (player.getIsPlay() == false) { //???!!!!!!
-            if (table.ifExists(word) || dictionnary.findWord(word)) {
+        if (player.getIsPlay() == false) { //SI DEJA JOUER
+            if (table.ifExists(word) && dictionnary.findWord(word)) {
                 player.setWordProposed(word);
                 player.setIsPlay(true);
+            } else {
+                System.out.println("INCORECTE"); // geré le fait que si un joueur propose un mot incorecte (bouclé ou message)
             }
         }
-        if (isAllPlayerPLay()) { // dans nexRound
+        if (isAllPlayerPLay()) { // fin du round
             state = State.ROUND_OVER;
             compareSize(players.get(0), players.get(1));
         }
@@ -61,6 +64,9 @@ public class CharabiaGame implements Charabia {
             throw new IllegalStateException("when game is not in state CONFIGURE");
         }
         this.players.add(new Player(playerName));
+        if (players.size() == 2) { // si tt les joueur on rejoint
+            state = State.STARTED;
+        }
         return this.players.get(players.size() - 1); // r'envoi le drnier player ajouter 
     }
 
@@ -75,7 +81,31 @@ public class CharabiaGame implements Charabia {
             throw new IllegalStateException("is game is not in ROUND_OVER state");
         }
         state = State.STARTED;
+        table.refreshTable(getRoundWinners().get(0).getWordProposed()); // refrechi la table avec le gagant *plus tard generé aleatoir
         resetIsPlay(); // met sit les joueur on jouer a false
+    }
+
+    @Override
+    public boolean isRoundOver() {
+        boolean isRoundOver = false;
+        if (state == State.ROUND_OVER) {
+            isRoundOver = true;
+        }
+        return isRoundOver;
+    }
+
+    @Override
+    public boolean isGameOver() {
+        boolean gameOver = false;
+        if (bag.bagIsEmpty() || table.getIfNotFull()) {
+            gameOver = true;
+        }
+        return gameOver;
+    }
+
+    @Override
+    public List<Player> getWinners() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -91,8 +121,9 @@ public class CharabiaGame implements Charabia {
     }
 
     /**
-     * compare the size of the word and return the list of the players
-     * who find the longest word
+     * compare the size of the word and return the list of the players who find
+     * the longest word
+     *
      * @param playerOne propose his word
      * @param playerTwo propose his word
      */
@@ -108,14 +139,14 @@ public class CharabiaGame implements Charabia {
         }
         return playerWinner;
     }
-    
+
     /**
      * compare the size of the word and return the winner calculate his SCORE
      *
      * @param playerOne propose his word
      * @param playerTwo propose his word
      */
-    private void compareSize(Player playerOne, Player playerTwo) { 
+    private void compareSize(Player playerOne, Player playerTwo) {
         if (playerOne.getWordProposed().length() > playerTwo.getWordProposed().length()) {
             calculatScor(playerOne);
         } else if (playerOne.getWordProposed().length() == playerTwo.getWordProposed().length()) {
