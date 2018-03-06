@@ -24,6 +24,7 @@ public class CharabiaGame implements Charabia {
         this.table = new Table(bag);
         this.dictionnary = new Dictionary();
         this.state = State.CONFIGURE;
+        current = 0;
     }
 
     @Override
@@ -37,12 +38,15 @@ public class CharabiaGame implements Charabia {
             throw new IllegalStateException("the player already played");
         }
         if (player.getIsPlay() == false) { //SI DEJA JOUER
+            player.setIsPlay(true);
             if (table.ifExists(word) && dictionnary.findWord(word)) {
                 player.setWordProposed(word);
-                player.setIsPlay(true);
+                System.out.println("Mot accepter");
+                //player.setIsPlay(true);
             } else {
-                System.out.println("INCORECTE"); // geré le fait que si un joueur propose un mot incorecte (bouclé ou message)
+                System.out.println("INCORECTE"); // geré le fait que si un joueur propose un mot incorecte (bouclé ou message) OU IL PASSE SON TOURE
             }
+            nextPlayer();
         }
         if (isAllPlayerPLay()) { // fin du round
             state = State.ROUND_OVER;
@@ -56,6 +60,7 @@ public class CharabiaGame implements Charabia {
             throw new IllegalStateException("is not in ROUND_OVER state.");
         }
         return RoundWinnersFind(players.get(0), players.get(1));
+        
     }
 
     @Override
@@ -80,8 +85,9 @@ public class CharabiaGame implements Charabia {
         if (state != State.ROUND_OVER) {
             throw new IllegalStateException("is game is not in ROUND_OVER state");
         }
+        table.refreshTable(getRoundWinners().get(current).getWordProposed()); // refrechi la table avec le gagant *plus tard generé aleatoir
+        this.refrshWord();
         state = State.STARTED;
-        table.refreshTable(getRoundWinners().get(0).getWordProposed()); // refrechi la table avec le gagant *plus tard generé aleatoir
         resetIsPlay(); // met sit les joueur on jouer a false
     }
 
@@ -89,6 +95,7 @@ public class CharabiaGame implements Charabia {
     public boolean isRoundOver() {
         boolean isRoundOver = false;
         if (state == State.ROUND_OVER) {
+            state = State.ROUND_OVER;
             isRoundOver = true;
         }
         return isRoundOver;
@@ -185,6 +192,33 @@ public class CharabiaGame implements Charabia {
         }
     }
 
+    /**
+     * Returns the current player.
+     *
+     * @return Player.
+     */
+    Player getCurrentPlayer() {
+        return players.get(current);
+    }
+
+    /**
+     * Returns the next player.
+     */
+    private void nextPlayer() {
+        current++;
+        if (this.current > this.players.size() - 1) {
+            this.current = 0;
+        }
+    }
+
+    /**
+     * refresh the player's name for the next round
+     */
+    private void refrshWord(){
+        for(Player pp : players){
+            pp.setWordProposed("");
+        }
+    }
     public Bag getBag() {
         return bag;
     }

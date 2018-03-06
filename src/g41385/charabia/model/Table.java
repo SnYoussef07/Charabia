@@ -105,8 +105,11 @@ class Table {
         List<Tile> tile = this.myTable;
         return tile;
     }
-
-    public boolean getIfNotFull() {
+    /**
+     * rETURN IFnOTfULL
+     * @return Boolean
+     */
+    boolean getIfNotFull() {
         return ifNotFull;
     }
     
