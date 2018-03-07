@@ -70,7 +70,8 @@ class Table {
     }
 
     /**
-     * refresh the table according to the winner's word
+     * refresh the table according to the winner's word If no player can find a
+     * word, reset the table
      *
      * @param winWord
      */
@@ -79,18 +80,26 @@ class Table {
             throw new IllegalArgumentException("winWord cannot be null");
         }
         char[] charWord = winWord.toCharArray();
-        for (int i = 0; i < charWord.length; i++) {
-            for (int j = 0; j < this.myTable.size(); j++) {
-                if (charWord[i] == myTable.get(j).getChar()) {
-                    myTable.remove(j);
-                    break;
+        if (!"".equals(winWord)) {
+            for (int i = 0; i < charWord.length; i++) {
+                for (int j = 0; j < this.myTable.size(); j++) {
+                    if (charWord[i] == myTable.get(j).getChar()) {
+                        myTable.remove(j);
+                        break;
+                    }
                 }
             }
+        } else {
+            for (Tile tt : myTable) {
+                bag.getMyBag().add(tt);
+            }
+            myTable.clear();
+            initTable();
         }
-        if( ((bag.getMyBag().size()-1) + (myTable.size()-1)) < 10) {
+        if (((bag.getMyBag().size() - 1) + (myTable.size() - 1)) < 10) {
             ifNotFull = true;
-        }else{
-             while (myTable.size() < 10) {
+        } else {
+            while (myTable.size() < 10) {
                 myTable.add(bag.draw());
             }
         }
@@ -105,14 +114,15 @@ class Table {
         List<Tile> tile = this.myTable;
         return tile;
     }
+
     /**
      * rETURN IFnOTfULL
+     *
      * @return Boolean
      */
     boolean getIfNotFull() {
         return ifNotFull;
     }
-    
 
     @Override
     public String toString() {

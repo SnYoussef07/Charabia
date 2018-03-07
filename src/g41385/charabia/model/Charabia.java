@@ -109,6 +109,24 @@ public interface Charabia {
      * @return true if game is over.
      */
     public boolean isGameOver() ;
+    /**
+     * Return list of Tile for diplay
+     * @return 
+     */
+    public List<Tile> getListTile();
+    
+    /**
+     * if the word propose can be play
+     * @param word proposed
+     * @return boolean is can be play
+     */
+    public boolean isPlay(String word);
+    
+    /**
+     * Return number of tiles in the bag 
+     * @return number tiles
+     */
+    public int numberTiles();
 
     
 }

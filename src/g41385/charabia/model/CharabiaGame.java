@@ -28,8 +28,13 @@ public class CharabiaGame implements Charabia {
     }
 
     @Override
-    public Table getTiles() {  /// car connait pas table comme publique
+    public Table getTiles() {
         return table;
+    }
+
+    @Override
+    public List<Tile> getListTile() {
+        return this.table.getMyTable();
     }
 
     @Override
@@ -39,12 +44,10 @@ public class CharabiaGame implements Charabia {
         }
         if (player.getIsPlay() == false) { //SI DEJA JOUER
             player.setIsPlay(true);
-            if (table.ifExists(word) && dictionnary.findWord(word)) {
+
+            if (!"pass".equals(word)) {
                 player.setWordProposed(word);
                 System.out.println("Mot accepter");
-                //player.setIsPlay(true);
-            } else {
-                System.out.println("INCORECTE"); // geré le fait que si un joueur propose un mot incorecte (bouclé ou message) OU IL PASSE SON TOURE
             }
             nextPlayer();
         }
@@ -55,12 +58,21 @@ public class CharabiaGame implements Charabia {
     }
 
     @Override
+    public boolean isPlay(String word) {
+        boolean play = false;
+        if ((table.ifExists(word) && dictionnary.findWord(word)) || word.equals("pass") ) {
+            play = true;
+        }
+        return play;
+    }
+
+    @Override
     public List<Player> getRoundWinners() {
         if (state != State.ROUND_OVER) {
             throw new IllegalStateException("is not in ROUND_OVER state.");
         }
         return RoundWinnersFind(players.get(0), players.get(1));
-        
+
     }
 
     @Override
@@ -88,14 +100,13 @@ public class CharabiaGame implements Charabia {
         table.refreshTable(getRoundWinners().get(current).getWordProposed()); // refrechi la table avec le gagant *plus tard generé aleatoir
         this.refrshWord();
         state = State.STARTED;
-        resetIsPlay(); // met sit les joueur on jouer a false
+        resetIsPlay();
     }
 
     @Override
     public boolean isRoundOver() {
         boolean isRoundOver = false;
         if (state == State.ROUND_OVER) {
-            state = State.ROUND_OVER;
             isRoundOver = true;
         }
         return isRoundOver;
@@ -112,7 +123,21 @@ public class CharabiaGame implements Charabia {
 
     @Override
     public List<Player> getWinners() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Player> playerWinner = new ArrayList();
+        if (players.get(0).getScore() > players.get(1).getScore()) {
+            playerWinner.add(players.get(0));
+        } else if (players.get(0).getScore() < players.get(1).getScore()) {
+            playerWinner.add(players.get(1));
+        } else {
+            playerWinner.add(players.get(0));
+            playerWinner.add(players.get(1));
+        }
+        return playerWinner;
+    }
+    
+    @Override
+    public int numberTiles() {
+        return bag.getMyBag().size();
     }
 
     /**
@@ -121,7 +146,7 @@ public class CharabiaGame implements Charabia {
      * @param player
      */
     private void calculatScor(Player player) {
-        char[] charWord = player.getName().toCharArray();
+        char[] charWord = player.getWordProposed().toCharArray();
         for (int i = 0; i < charWord.length; i++) {
             player.addScore(this.bag.getScorAt(charWord[i]));
         }
@@ -134,14 +159,14 @@ public class CharabiaGame implements Charabia {
      * @param playerOne propose his word
      * @param playerTwo propose his word
      */
-    private List<Player> RoundWinnersFind(Player playerOne, Player playerTwo) { // en faire 2 pour nextRound et Play
+    private List<Player> RoundWinnersFind(Player playerOne, Player playerTwo) {
         List<Player> playerWinner = new ArrayList();
         if (playerOne.getWordProposed().length() > playerTwo.getWordProposed().length()) {
             playerWinner.add(playerOne);
         } else if (playerOne.getWordProposed().length() == playerTwo.getWordProposed().length()) {
             playerWinner.add(playerOne);
             playerWinner.add(playerTwo);
-        } else {
+        } else if (playerOne.getWordProposed().length() < playerTwo.getWordProposed().length()) {
             playerWinner.add(playerTwo);
         }
         return playerWinner;
@@ -156,10 +181,10 @@ public class CharabiaGame implements Charabia {
     private void compareSize(Player playerOne, Player playerTwo) {
         if (playerOne.getWordProposed().length() > playerTwo.getWordProposed().length()) {
             calculatScor(playerOne);
-        } else if (playerOne.getWordProposed().length() == playerTwo.getWordProposed().length()) {
-            calculatScor(playerOne);
+        } else if (playerOne.getWordProposed().length() < playerTwo.getWordProposed().length()) {
             calculatScor(playerTwo);
         } else {
+            calculatScor(playerOne);
             calculatScor(playerTwo);
         }
     }
@@ -186,7 +211,7 @@ public class CharabiaGame implements Charabia {
     /**
      * reset the isPLay attribute of each player to false
      */
-    private void resetIsPlay() { // met a false isPLay a mettr au debut d'un round!!!!!!!!!!!!
+    private void resetIsPlay() {
         for (Player pl : players) {
             pl.rsetIsPlay();
         }
@@ -214,12 +239,23 @@ public class CharabiaGame implements Charabia {
     /**
      * refresh the player's name for the next round
      */
-    private void refrshWord(){
-        for(Player pp : players){
+    private void refrshWord() {
+        for (Player pp : players) {
             pp.setWordProposed("");
         }
     }
-    public Bag getBag() {
-        return bag;
+
+    public String recherchTest() { // a SUPPPP 
+        String test = "";
+        String ret = "";
+        for (Tile tt : table.getMyTable()) {
+            test += tt.getChar();
+        }
+        for (String s : dictionnary.getMyDico()) {
+            if (test.contains(s)) {
+                ret = s;
+            }
+        }
+        return ret;
     }
 }

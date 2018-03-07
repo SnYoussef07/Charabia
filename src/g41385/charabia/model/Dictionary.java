@@ -35,7 +35,7 @@ class Dictionary {
             br = new BufferedReader(new FileReader(path += ".txt"));
             String line;
             while ((line = br.readLine()) != null) {
-                myDico.add(br.readLine());
+                myDico.add(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -63,6 +63,7 @@ class Dictionary {
         for (String s : myDico) {
             if (word.equals(s)) {
                 ok = true;
+                break;
             }
         }
         return ok;

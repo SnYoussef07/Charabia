@@ -4,7 +4,7 @@ package g41385.charabia.model;
  * represents the game tile
  * @author 41385
  */
-class Tile {
+public class Tile {
 
     private final MyCharacter letter;
     private final  int scoring;
@@ -14,7 +14,7 @@ class Tile {
      * @param letter
      * @param scoring 
      */
-    Tile(MyCharacter letter, int scoring) {
+    public Tile(MyCharacter letter, int scoring) {
         if (letter == null || scoring < 0) {
             throw new IllegalArgumentException("letter cannot be null and scoring cannot be less than");
         }
@@ -25,7 +25,7 @@ class Tile {
      * Return letter
      * @return MyCharacter
      */
-    public MyCharacter getLetter() {return letter;}
+    MyCharacter getLetter() {return letter;}
     /**
      * Return scoring
      * @return int
