@@ -43,14 +43,14 @@ public class Player {
      * Return wordProposed
      * @return String
      */
-    public String getWordProposed() {
+    String getWordProposed() {
         return wordProposed;
     }
     /**
      * set word proposed
      * @param wordProposed 
      */
-    public void setWordProposed(String wordProposed) {
+    void setWordProposed(String wordProposed) {
         this.wordProposed = wordProposed;
     }
     
@@ -59,7 +59,7 @@ public class Player {
      *
      * @param score
      */
-    public void addScore(int score) {
+    void addScore(int score) {
         if (score < 0) {
             throw new IllegalArgumentException("score is negative");
         }
@@ -70,20 +70,18 @@ public class Player {
      * Return isplay
      * @return boolean
      */
-    public boolean getIsPlay() {
+    boolean getIsPlay() {
         return isPlay;
     }
 
-    public void setIsPlay(boolean isPlay) {
+    void setIsPlay(boolean isPlay) {
         this.isPlay = isPlay;
     }
     
     /**
      * Reset is play
      */
-    public void rsetIsPlay() {
+    void rsetIsPlay() {
         this.isPlay = false;
-    }
-    
-    
+    }  
 }

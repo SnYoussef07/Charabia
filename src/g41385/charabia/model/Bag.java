@@ -109,16 +109,4 @@ class Bag {
         List<Tile> tile = this.myBag;
         return tile;
     }
-
-    @Override
-    public String toString() {
-        String stTile = "";
-        int i = 0;
-        for (Tile tile : this.myBag) {
-            stTile += i + "  " + tile.toString() + '\n';
-            i++;
-        }
-        return stTile;
-    }
-
 }

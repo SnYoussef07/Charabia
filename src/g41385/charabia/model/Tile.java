@@ -36,11 +36,4 @@ public class Tile {
      * @return Char
      */
     public char getChar(){return this.letter.getMyLetter();}
-
-    @Override
-    public String toString() {
-        return "["+letter.getMyLetter()+"|"+scoring+"]";
-    }
-    
-    
 }

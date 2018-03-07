@@ -56,10 +56,10 @@ class MyCharacter {
      * return myLetter
      * @return char 
      */
-    public char getMyLetter() {return myLetter;}
+    char getMyLetter() {return myLetter;}
     /**
      * Return multip
      * @return int 
      */
-    public int getMultip() {return multip;}
+    int getMultip() {return multip;}
 }

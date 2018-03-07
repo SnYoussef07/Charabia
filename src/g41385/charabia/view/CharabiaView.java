@@ -19,6 +19,9 @@ public class CharabiaView {
 
     private Charabia charabiaGame;
     private Scanner sc = new Scanner(System.in);
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
+    public static final String ANSI_RESET = "\u001B[0m";
 
     public CharabiaView() throws IOException {
         charabiaGame = new CharabiaGame();
@@ -30,11 +33,18 @@ public class CharabiaView {
 
     public String displayTable() {
         String str = "";
+        System.out.println("                                                 "
+              + "Il reste ["+charabiaGame.numberTiles()+"] Tuile Dans le Sac");
+        str += "    -----------------------------------------------------------"
+                + "----------------------------------------------"
+                + "-------------" + '\n';
         for (Tile tile : this.charabiaGame.getListTile()) {
-            str += " " + displayTile(tile);
+            str += "    :" + displayTile(tile) + ":";
         }
         str += '\n';
-        str += "--------------------------------------------------------------------------------" + '\n';
+        str += "    ------------------------------------------------------------"
+                + "----------------------------------------------"
+                + "------------" + '\n';
         return str;
     }
 
@@ -48,14 +58,18 @@ public class CharabiaView {
             System.out.println("Nom incorect r'eintroduisser un autre nom");
             p2 = sc.nextLine();
         }
-        System.out.println("Initialisation des Joueurs"+'\n');
-        System.out.println("__________________________"+'\n');
-        System.out.println("Joueur [|" + charabiaGame.joinGame(p1).getName() + "|]");
-        System.out.println("Joueur [|" + charabiaGame.joinGame(p2).getName() + "|]");
+        System.out.println('\n');
+        System.out.println("Initialisation des Joueurs");
+        System.out.println("__________________________" + '\n');
+        System.out.println("    Joueur [|" + charabiaGame.joinGame(p1).getName() + "|]");
+        System.out.println("    Joueur [|" + charabiaGame.joinGame(p2).getName() + "|]");
+        System.out.println("__________________________" + '\n');
     }
 
     public void play() {
         joinGame();
+        System.out.println(displayTable());
+
     }
 
     public static void main(String[] args) throws IOException {

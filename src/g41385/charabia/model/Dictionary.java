@@ -78,13 +78,4 @@ class Dictionary {
         List<String> copyDico = this.myDico;
         return copyDico;
     }
-
-    @Override
-    public String toString() {
-        String ss = null;
-        for (String s : myDico) {
-            ss = ss + s + "\n";
-        }
-        return ss;
-    }
 }

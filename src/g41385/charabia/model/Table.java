@@ -123,17 +123,4 @@ class Table {
     boolean getIfNotFull() {
         return ifNotFull;
     }
-
-    @Override
-    public String toString() {
-        String str = "";
-        str += "--------------------------------------------------------------------------------" + '\n';
-        for (Tile tile : this.myTable) {
-            str += "-" + tile.toString();
-        }
-        str += '\n';
-        str += "--------------------------------------------------------------------------------" + '\n';
-        return str;
-    }
-
 }
