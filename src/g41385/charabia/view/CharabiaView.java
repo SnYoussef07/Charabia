@@ -68,13 +68,13 @@ public class CharabiaView {
         System.out.println("                              "
                 + "[_" + charabiaGame.getCurrentPlayer().getName()
                 + "_] Proposer votre -Mot- ou -pass- pour passer votre tour");
-        System.out.println("Le meilleur mot est === " + charabiaGame.recherchBestWord()); // A enlever 
-        System.out.println("Le mot DISPONNIBLE MIN === " + charabiaGame.recherchMinWord()); // A enlever 
+        //System.out.println("Le meilleur mot est === " + charabiaGame.recherchBestWord()); // A enlever 
+        //System.out.println("Le mot DISPONNIBLE MIN === " + charabiaGame.recherchMinWord()); // A enlever 
         String p1Word;
-        p1Word = charabiaGame.recherchMinWord();
+        //p1Word = charabiaGame.recherchMinWord();
         while (ok) {
             System.out.print("*** ");
-            //String p1Word = sc.nextLine();
+            p1Word = sc.nextLine();
             //String p1Word = charabiaGame.recherchMinWord();
             if (charabiaGame.isPlay(p1Word)) {
                 ok = false;
@@ -149,6 +149,7 @@ public class CharabiaView {
         boolean ok = true;
         int countWin = 0;
         while (!charabiaGame.isGameOver()) {
+            charabiaGame.wordNotFound();
             if (charabiaGame.isRoundOver()) {
                 countWin = 0;
                 displayRoundOver(countWin);

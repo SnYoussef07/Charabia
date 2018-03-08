@@ -38,7 +38,7 @@ class Table {
      * returns a boolean that says if the proposed word exists in the table
      *
      * @param word
-     * @return
+     * @return boolean
      */
     boolean ifExists(String word) {
         if (word == null) {

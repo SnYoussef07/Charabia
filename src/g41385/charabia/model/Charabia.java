@@ -134,8 +134,13 @@ public interface Charabia {
      * @return Player.
      */
     public Player getCurrentPlayer();
+    /**
+     * If towards the end of the game, the Bag and the table together
+     * can no longer form a word, then stop the game
+     */
+    public void wordNotFound();
     
     
-    public String recherchBestWord(); /// method de test
-    public String recherchMinWord(); /// method de test
+    //public String recherchBestWord(); /// method de test
+    //public String recherchMinWord(); /// method de test
 }

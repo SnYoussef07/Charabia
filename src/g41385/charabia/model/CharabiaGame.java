@@ -17,6 +17,7 @@ public class CharabiaGame implements Charabia {
     private State state;
     private List<Player> players;
     private int current;
+    private boolean gameOver;
 
     public CharabiaGame() throws FileNotFoundException, IOException {
         this.players = new ArrayList<>();
@@ -25,6 +26,7 @@ public class CharabiaGame implements Charabia {
         this.dictionnary = new Dictionary();
         this.state = State.CONFIGURE;
         current = 0;
+        gameOver = false;
     }
 
     @Override
@@ -60,7 +62,7 @@ public class CharabiaGame implements Charabia {
     @Override
     public boolean isPlay(String word) {
         boolean play = false;
-        if ((table.ifExists(word) && dictionnary.findWord(word)) || word.equals("pass") ) {
+        if ((table.ifExists(word) && dictionnary.findWord(word)) || word.equals("pass")) {
             play = true;
         }
         return play;
@@ -114,7 +116,6 @@ public class CharabiaGame implements Charabia {
 
     @Override
     public boolean isGameOver() {
-        boolean gameOver = false;
         if (bag.bagIsEmpty() || table.getIfNotFull()) {
             gameOver = true;
         }
@@ -134,7 +135,7 @@ public class CharabiaGame implements Charabia {
         }
         return playerWinner;
     }
-    
+
     @Override
     public int numberTiles() {
         return bag.getMyBag().size();
@@ -217,7 +218,6 @@ public class CharabiaGame implements Charabia {
         }
     }
 
-
     @Override
     public Player getCurrentPlayer() {
         return players.get(current);
@@ -242,7 +242,46 @@ public class CharabiaGame implements Charabia {
         }
     }
 
+    public void setGameOver() {
+        this.gameOver = true;
+    }
+
     @Override
+    public void wordNotFound() {                                                    
+        if (this.bag.getMyBag().size() < 10 && this.bag.getMyBag().size() > 0) {
+            List<Tile> myTiles = new ArrayList<>();
+            myTiles.addAll(bag.getMyBag());
+            myTiles.addAll(table.getMyTable());
+
+            if (!findWordDico(myTiles)) {
+                setGameOver();
+            }
+        }
+    }
+    /**
+     * receives a list and checks if a dictionary word is found in the list
+     * @param list of the Tile
+     * @return if find word in List
+     */
+    private boolean findWordDico(List<Tile> ll) { 
+        String test = "";
+        boolean find = false;
+        for (Tile tt : ll) {
+            test += tt.getChar();
+        }
+        for (String s : dictionnary.getMyDico()) {
+            if (test.contains(s)) {
+                find = true;
+            }
+        }
+        return find;
+    }
+
+    
+    
+    
+    
+    /*@Override
     public String recherchBestWord() { // a SUPPPP 
         String test = "";
         String ret = "";
@@ -256,15 +295,14 @@ public class CharabiaGame implements Charabia {
             }
         }
         int max = 0;
-        for(int i =0;i<monTest.size();i++){
-            if(monTest.get(i).length() > max){
+        for (int i = 0; i < monTest.size(); i++) {
+            if (monTest.get(i).length() > max) {
                 max = monTest.get(i).length();
                 ret = monTest.get(i);
             }
         }
         return ret;
     }
-    
     @Override
     public String recherchMinWord() { // a SUPPPP 
         String test = "";
@@ -278,5 +316,6 @@ public class CharabiaGame implements Charabia {
             }
         }
         return ret;
-    }
+    }*/
+
 }
