@@ -127,6 +127,15 @@ public interface Charabia {
      * @return number tiles
      */
     public int numberTiles();
-
     
+    /**
+     * Returns the current player.
+     *
+     * @return Player.
+     */
+    public Player getCurrentPlayer();
+    
+    
+    public String recherchBestWord(); /// method de test
+    public String recherchMinWord(); /// method de test
 }

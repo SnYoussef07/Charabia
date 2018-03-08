@@ -47,7 +47,7 @@ public class MainTest {
                 ch.nextRound();
             } else {
                 System.out.println("Joueur " + ch.getCurrentPlayer().getName() + " Proposer votre mot ou TAPER pass POUR passer votre toure");
-                System.out.println("Le meilleur mot est === " + ch.recherchTest());
+                System.out.println("Le meilleur mot est === " + ch.recherchMinWord());
                 while(ok){
                     String p1Word = sc.nextLine();
                     if(ch.isPlay(p1Word)){

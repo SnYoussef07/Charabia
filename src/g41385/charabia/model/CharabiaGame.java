@@ -217,12 +217,9 @@ public class CharabiaGame implements Charabia {
         }
     }
 
-    /**
-     * Returns the current player.
-     *
-     * @return Player.
-     */
-    Player getCurrentPlayer() {
+
+    @Override
+    public Player getCurrentPlayer() {
         return players.get(current);
     }
 
@@ -245,7 +242,31 @@ public class CharabiaGame implements Charabia {
         }
     }
 
-    public String recherchTest() { // a SUPPPP 
+    @Override
+    public String recherchBestWord() { // a SUPPPP 
+        String test = "";
+        String ret = "";
+        for (Tile tt : table.getMyTable()) {
+            test += tt.getChar();
+        }
+        List<String> monTest = new ArrayList<>();
+        for (String s : dictionnary.getMyDico()) {
+            if (test.contains(s)) {
+                monTest.add(s);
+            }
+        }
+        int max = 0;
+        for(int i =0;i<monTest.size();i++){
+            if(monTest.get(i).length() > max){
+                max = monTest.get(i).length();
+                ret = monTest.get(i);
+            }
+        }
+        return ret;
+    }
+    
+    @Override
+    public String recherchMinWord() { // a SUPPPP 
         String test = "";
         String ret = "";
         for (Tile tt : table.getMyTable()) {

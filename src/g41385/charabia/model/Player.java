@@ -43,7 +43,7 @@ public class Player {
      * Return wordProposed
      * @return String
      */
-    String getWordProposed() {
+    public String getWordProposed() {
         return wordProposed;
     }
     /**

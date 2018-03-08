@@ -7,6 +7,7 @@ package g41385.charabia.view;
 
 import g41385.charabia.model.Charabia;
 import g41385.charabia.model.CharabiaGame;
+import g41385.charabia.model.Player;
 import g41385.charabia.model.Tile;
 import java.io.IOException;
 import java.util.Scanner;
@@ -17,11 +18,8 @@ import java.util.Scanner;
  */
 public class CharabiaView {
 
-    private Charabia charabiaGame;
-    private Scanner sc = new Scanner(System.in);
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
-    public static final String ANSI_RESET = "\u001B[0m";
+    private final Charabia charabiaGame;
+    private final Scanner sc = new Scanner(System.in);
 
     public CharabiaView() throws IOException {
         charabiaGame = new CharabiaGame();
@@ -34,7 +32,7 @@ public class CharabiaView {
     public String displayTable() {
         String str = "";
         System.out.println("                                                 "
-              + "Il reste ["+charabiaGame.numberTiles()+"] Tuile Dans le Sac");
+                + "Il reste [" + charabiaGame.numberTiles() + "] Tuile Dans le Sac");
         str += "    -----------------------------------------------------------"
                 + "----------------------------------------------"
                 + "-------------" + '\n';
@@ -49,13 +47,12 @@ public class CharabiaView {
     }
 
     public void joinGame() {
-        System.out.println("Entreé le nom du joueur 1");
+        System.out.println("Entrer le nom du joueur 1");
         String p1 = sc.nextLine();
-        System.out.println("Entré le nom du joueur 2");
+        System.out.println("Entrer le nom du joueur 2");
         String p2 = sc.nextLine();
-
         while (p2.equals(p1)) {
-            System.out.println("Nom incorect r'eintroduisser un autre nom");
+            System.out.println("Nom incorrect veuillez introduire un autre nom "); 
             p2 = sc.nextLine();
         }
         System.out.println('\n');
@@ -66,15 +63,83 @@ public class CharabiaView {
         System.out.println("__________________________" + '\n');
     }
 
+    public void displayPlay(boolean ok) {
+        System.out.println(displayTable());
+        System.out.println("                              "
+                + "[_" + charabiaGame.getCurrentPlayer().getName()
+                + "_] Proposer votre -Mot- ou -pass- pour passer votre tour");
+        System.out.println("Le meilleur mot est === " + charabiaGame.recherchBestWord()); // A enlever 
+        System.out.println("Le mot DISPONNIBLE MIN === " + charabiaGame.recherchMinWord()); // A enlever 
+        while (ok) {
+            System.out.print("*** ");
+            String p1Word = sc.nextLine();
+
+            if (charabiaGame.isPlay(p1Word)) {
+                ok = false;
+                charabiaGame.play(charabiaGame.getCurrentPlayer(), p1Word);
+            } else {
+                System.out.println("Mot introuvable dans le Dictionnaire"
+                        + " OU dans la Table !!!");
+            }
+        }
+        ok = true;
+    }
+
+    public void displayRoundOver(int countWin) {
+        for (int i = 0; i < 50; i++) {
+            System.out.println();
+        }
+        System.out.println("                                            "
+                + "     ______________________________" + '\n');
+        System.out.println("                                            "
+                + "     *** Joueur Gagnant Du Round ***");
+        for (Player pp : charabiaGame.getRoundWinners()) {
+            if (!"".equals(pp.getWordProposed())) {
+                System.out.println("                                    "
+                        + "             Nom : " + pp.getName());
+                System.out.println("                                    "
+                        + "             Scor : " + pp.getScore());
+                System.out.println("                                    "
+                        + "             ------------------------------");
+                countWin++;
+            }
+        }
+        if (countWin == 0) {
+            System.out.println("                                        "
+                    + "         ! Aucun Gagnant dans ce toure !");
+        }
+        System.out.println("                                            "
+                + "     ______________________________" + '\n');
+        for (int i = 0; i < 20; i++) {
+            System.out.println();
+        }
+    }
+
+    public void startGame() {
+        boolean ok = true;
+        int countWin = 0;
+        while (!charabiaGame.isGameOver()) {
+            if (charabiaGame.isRoundOver()) {
+                countWin = 0;
+                displayRoundOver(countWin);
+                charabiaGame.nextRound();
+            } else {
+                displayPlay(ok);
+            }
+        }
+        System.out.println("LES GAGANT SONT :");
+        for (Player pp : charabiaGame.getWinners()) {
+            System.out.println(pp.getName());
+        }
+    }
+
     public void play() {
         joinGame();
-        System.out.println(displayTable());
-
+        startGame();
     }
 
     public static void main(String[] args) throws IOException {
         CharabiaView view = new CharabiaView();
         view.play();
-
     }
 }
