@@ -52,7 +52,7 @@ public class CharabiaView {
         System.out.println("Entrer le nom du joueur 2");
         String p2 = sc.nextLine();
         while (p2.equals(p1)) {
-            System.out.println("Nom incorrect veuillez introduire un autre nom "); 
+            System.out.println("Nom incorrect veuillez introduire un autre nom ");
             p2 = sc.nextLine();
         }
         System.out.println('\n');
@@ -70,16 +70,19 @@ public class CharabiaView {
                 + "_] Proposer votre -Mot- ou -pass- pour passer votre tour");
         System.out.println("Le meilleur mot est === " + charabiaGame.recherchBestWord()); // A enlever 
         System.out.println("Le mot DISPONNIBLE MIN === " + charabiaGame.recherchMinWord()); // A enlever 
+        String p1Word;
+        p1Word = charabiaGame.recherchMinWord();
         while (ok) {
             System.out.print("*** ");
-            String p1Word = sc.nextLine();
-
+            //String p1Word = sc.nextLine();
+            //String p1Word = charabiaGame.recherchMinWord();
             if (charabiaGame.isPlay(p1Word)) {
                 ok = false;
                 charabiaGame.play(charabiaGame.getCurrentPlayer(), p1Word);
             } else {
                 System.out.println("Mot introuvable dans le Dictionnaire"
                         + " OU dans la Table !!!");
+                p1Word = "pass";
             }
         }
         ok = true;
@@ -115,6 +118,33 @@ public class CharabiaView {
         }
     }
 
+    public void displayWinner() {
+        for (int i = 0; i < 50; i++) {
+            System.out.println();
+        }
+        System.out.println("                                            "
+                + "     $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+        System.out.println("                                            "
+                + "     ______________________________" + '\n');
+        System.out.println("                                            "
+                + "     §§§§§ Les Gagnant §§§§§");
+        for (Player pp : charabiaGame.getWinners()) {
+            System.out.println("                                    "
+                        + "             Nom : " + pp.getName());
+                System.out.println("                                    "
+                        + "             Scor : " + pp.getScore());
+                System.out.println("                                    "
+                        + "             ------------------------------");
+        }
+        System.out.println("                                            "
+                + "     ______________________________" + '\n');
+        System.out.println("                                            "
+                + "     $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+        for (int i = 0; i < 30; i++) {
+            System.out.println();
+        }
+    }
+
     public void startGame() {
         boolean ok = true;
         int countWin = 0;
@@ -127,10 +157,7 @@ public class CharabiaView {
                 displayPlay(ok);
             }
         }
-        System.out.println("LES GAGANT SONT :");
-        for (Player pp : charabiaGame.getWinners()) {
-            System.out.println(pp.getName());
-        }
+        displayWinner();
     }
 
     public void play() {
