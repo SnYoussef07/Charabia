@@ -49,7 +49,7 @@ public class CharabiaGame implements Charabia {
 
             if (!"pass".equals(word)) {
                 player.setWordProposed(word);
-                System.out.println("Mot accepter");
+                System.out.println("Mot accepter"); //a enlever
             }
             nextPlayer();
         }
@@ -62,7 +62,10 @@ public class CharabiaGame implements Charabia {
     @Override
     public boolean isPlay(String word) {
         boolean play = false;
-        if ((table.ifExists(word) && dictionnary.findWord(word)) || word.equals("pass")) {
+        /*if ((table.ifExists(word) && dictionnary.findWord(word)) || word.equals("pass")) {
+            play = true;
+        }*/
+        if ((this.ifExists(table.getMyTable() , word) && dictionnary.findWord(word)) || word.equals("pass")) {
             play = true;
         }
         return play;
@@ -78,7 +81,7 @@ public class CharabiaGame implements Charabia {
     }
 
     @Override
-    public Player joinGame(String playerName) { // ajout EXCEPTIOÀN SI DEJA JOUEUR AVEC LE MEME NOM
+    public Player joinGame(String playerName) {
         if (state != State.CONFIGURE) {
             throw new IllegalStateException("when game is not in state CONFIGURE");
         }
@@ -247,7 +250,7 @@ public class CharabiaGame implements Charabia {
     }
 
     @Override
-    public void wordNotFound() {                                                    
+    public void wordNotFound() {
         if (this.bag.getMyBag().size() < 10 && this.bag.getMyBag().size() > 0) {
             List<Tile> myTiles = new ArrayList<>();
             myTiles.addAll(bag.getMyBag());
@@ -258,39 +261,43 @@ public class CharabiaGame implements Charabia {
             }
         }
     }
+
     /**
      * receives a list and checks if a dictionary word is found in the list
+     *
      * @param list of the Tile
      * @return if find word in List
      */
-    private boolean findWordDico(List<Tile> ll) { 
+    private boolean findWordDico(List<Tile> ll) {
         String test = "";
         boolean find = false;
         for (Tile tt : ll) {
             test += tt.getChar();
         }
         for (String s : dictionnary.getMyDico()) {
-            if (test.contains(s)) {
+            /*if (test.contains(s)) {               //reverifier 
+                find = true;
+            }*/
+            if (this.ifExists(ll , s)) {
                 find = true;
             }
         }
         return find;
     }
 
-    
-    
-    
-    
-    /*@Override
-    public String recherchBestWord() { // a SUPPPP 
-        String test = "";
+    @Override
+    public String recherchBestWord() { // Geré le meilleur Score !!!!!!!!!!!!! 
+        //String test = "";
         String ret = "";
-        for (Tile tt : table.getMyTable()) {
+        /*for (Tile tt : table.getMyTable()) {
             test += tt.getChar();
-        }
+        }*/
         List<String> monTest = new ArrayList<>();
         for (String s : dictionnary.getMyDico()) {
-            if (test.contains(s)) {
+            /*if (test.contains(s)) {
+                monTest.add(s);
+            }*/
+            if (this.ifExists(table.getMyTable(), s)) {
                 monTest.add(s);
             }
         }
@@ -303,6 +310,7 @@ public class CharabiaGame implements Charabia {
         }
         return ret;
     }
+
     @Override
     public String recherchMinWord() { // a SUPPPP 
         String test = "";
@@ -311,11 +319,49 @@ public class CharabiaGame implements Charabia {
             test += tt.getChar();
         }
         for (String s : dictionnary.getMyDico()) {
-            if (test.contains(s)) {
+            /*if (test.contains(s)) {
+                ret = s;
+            }*/
+            if (this.ifExists(table.getMyTable(), s)) {
                 ret = s;
             }
         }
         return ret;
-    }*/
+    }
+    
+     /**
+     * returns a boolean that says if the proposed word exists in the table
+     *
+     * @param word
+     * @return boolean
+     */
+    private boolean ifExists(List<Tile> list , String word) {           //MODIF DOC
+        if (word == null) {
+            throw new IllegalArgumentException("word cannot be null");
+        }
+        char[] charWord = word.toCharArray();
+        List<Character> copyTableCHar = new ArrayList();
+        boolean okProfond = false;
+        boolean okFacade = true;
+        for (Tile tt : list) {
+            copyTableCHar.add(tt.getChar());
+        }
+        if (charWord.length <= list.size()) {
+            for (int i = 0; i < charWord.length; i++) {
+                for (int j = 0; j < copyTableCHar.size(); j++) {
+                    if (charWord[i] == copyTableCHar.get(j)) {
+                        okProfond = true;
+                        copyTableCHar.remove(j);
+                        break;
+                    }
+                }
+                if (okProfond == false) {
+                    okFacade = false;
+                }
+                okProfond = false;
+            }
+        }
+        return okFacade;
+    }
 
 }

@@ -40,7 +40,7 @@ class Table {
      * @param word
      * @return boolean
      */
-    boolean ifExists(String word) {
+    /*boolean ifExists(String word) {         //dEPLACER DANS CHARABIA gAME
         if (word == null) {
             throw new IllegalArgumentException("word cannot be null");
         }
@@ -67,7 +67,7 @@ class Table {
             }
         }
         return okFacade;
-    }
+    }*/
 
     /**
      * refresh the table according to the winner's word If no player can find a
@@ -80,7 +80,7 @@ class Table {
             throw new IllegalArgumentException("winWord cannot be null");
         }
         char[] charWord = winWord.toCharArray();
-        if (!"".equals(winWord)) {
+        if (!"".equals(winWord)){
             for (int i = 0; i < charWord.length; i++) {
                 for (int j = 0; j < this.myTable.size(); j++) {
                     if (charWord[i] == myTable.get(j).getChar()) {
@@ -96,7 +96,7 @@ class Table {
             myTable.clear();
             initTable();
         }
-        if (((bag.getMyBag().size() - 1) + (myTable.size() - 1)) < 10) {
+        if (((bag.getMyBag().size()) + (myTable.size())) < 10) {
             ifNotFull = true;
         } else {
             while (myTable.size() < 10) {

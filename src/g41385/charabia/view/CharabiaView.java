@@ -68,21 +68,21 @@ public class CharabiaView {
         System.out.println("                              "
                 + "[_" + charabiaGame.getCurrentPlayer().getName()
                 + "_] Proposer votre -Mot- ou -pass- pour passer votre tour");
-        //System.out.println("Le meilleur mot est === " + charabiaGame.recherchBestWord()); // A enlever 
-        //System.out.println("Le mot DISPONNIBLE MIN === " + charabiaGame.recherchMinWord()); // A enlever 
+        System.out.println("Le meilleur mot est === " + charabiaGame.recherchBestWord()); // A enlever 
+        System.out.println("Le mot DISPONNIBLE MIN === " + charabiaGame.recherchMinWord()); // A enlever 
         String p1Word;
-        //p1Word = charabiaGame.recherchMinWord();
+        p1Word = charabiaGame.recherchMinWord();
         while (ok) {
             System.out.print("*** ");
-            p1Word = sc.nextLine();
-            //String p1Word = charabiaGame.recherchMinWord();
+            //p1Word = sc.nextLine();
             if (charabiaGame.isPlay(p1Word)) {
                 ok = false;
                 charabiaGame.play(charabiaGame.getCurrentPlayer(), p1Word);
             } else {
                 System.out.println("Mot introuvable dans le Dictionnaire"
                         + " OU dans la Table !!!");
-                p1Word = "pass";
+                
+                p1Word = "pass"; // A enlever
             }
         }
         ok = true;
@@ -149,7 +149,7 @@ public class CharabiaView {
         boolean ok = true;
         int countWin = 0;
         while (!charabiaGame.isGameOver()) {
-            charabiaGame.wordNotFound();
+            charabiaGame.wordNotFound(); // BUG ICIIIIIIIIIIIIIII
             if (charabiaGame.isRoundOver()) {
                 countWin = 0;
                 displayRoundOver(countWin);
@@ -163,7 +163,7 @@ public class CharabiaView {
 
     public void play() {
         joinGame();
-        startGame();
+        startGame();  
     }
 
     public static void main(String[] args) throws IOException {

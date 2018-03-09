@@ -141,6 +141,6 @@ public interface Charabia {
     public void wordNotFound();
     
     
-    //public String recherchBestWord(); /// method de test
-    //public String recherchMinWord(); /// method de test
+    public String recherchBestWord(); /// method de test
+    public String recherchMinWord(); /// method de test
 }
