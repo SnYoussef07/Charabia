@@ -6,16 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Represents a game of Charabia.
  *
  * @author 41385
  */
 public class CharabiaGame implements Charabia {
 
-    private Table table;
-    private Bag bag;
-    private Dictionary dictionnary;
+    private final Table table;
+    private final Bag bag;
+    private final Dictionary dictionnary;
     private State state;
-    private List<Player> players;
+    private final List<Player> players;
     private int current;
     private boolean gameOver;
 
@@ -30,11 +31,6 @@ public class CharabiaGame implements Charabia {
     }
 
     @Override
-    public Table getTiles() {
-        return table;
-    }
-
-    @Override
     public List<Tile> getListTile() {
         return this.table.getMyTable();
     }
@@ -44,28 +40,24 @@ public class CharabiaGame implements Charabia {
         if (state != State.STARTED) {
             throw new IllegalStateException("the player already played");
         }
-        if (player.getIsPlay() == false) { //SI DEJA JOUER
+        if (player.getIsPlay() == false) {
             player.setIsPlay(true);
 
             if (!"pass".equals(word)) {
                 player.setWordProposed(word);
-                System.out.println("Mot accepter"); //a enlever
             }
             nextPlayer();
         }
-        if (isAllPlayerPLay()) { // fin du round
+        if (isAllPlayerPLay()) {
             state = State.ROUND_OVER;
-            compareSize(players.get(0), players.get(1));
+            calculatScorWinner(RoundWinnersFind(players.get(0), players.get(1)));
         }
     }
 
     @Override
     public boolean isPlay(String word) {
         boolean play = false;
-        /*if ((table.ifExists(word) && dictionnary.findWord(word)) || word.equals("pass")) {
-            play = true;
-        }*/
-        if ((this.ifExists(table.getMyTable() , word) && dictionnary.findWord(word)) || word.equals("pass")) {
+        if ((this.ifFindWord(table.getMyTable(), word) && dictionnary.findWord(word)) || word.equals("pass")) {
             play = true;
         }
         return play;
@@ -86,10 +78,10 @@ public class CharabiaGame implements Charabia {
             throw new IllegalStateException("when game is not in state CONFIGURE");
         }
         this.players.add(new Player(playerName));
-        if (players.size() == 2) { // si tt les joueur on rejoint
+        if (players.size() == 2) {
             state = State.STARTED;
         }
-        return this.players.get(players.size() - 1); // r'envoi le drnier player ajouter 
+        return this.players.get(players.size() - 1);
     }
 
     @Override
@@ -102,10 +94,16 @@ public class CharabiaGame implements Charabia {
         if (state != State.ROUND_OVER) {
             throw new IllegalStateException("is game is not in ROUND_OVER state");
         }
-        table.refreshTable(getRoundWinners().get(current).getWordProposed()); // refrechi la table avec le gagant *plus tard generé aleatoir
-        this.refrshWord();
-        state = State.STARTED;
-        resetIsPlay();
+
+        table.refreshTable(getRoundWinners().get(current).getWordProposed());
+        if (table.getIfNotFull()) {
+            state = State.GAME_OVER;
+        } else {
+            this.refrshWord();
+            state = State.STARTED;
+            resetIsPlay();
+        }
+
     }
 
     @Override
@@ -119,7 +117,7 @@ public class CharabiaGame implements Charabia {
 
     @Override
     public boolean isGameOver() {
-        if (bag.bagIsEmpty() || table.getIfNotFull()) {
+        if (bag.bagIsEmpty() || (state.equals(State.GAME_OVER))) {
             gameOver = true;
         }
         return gameOver;
@@ -144,24 +142,63 @@ public class CharabiaGame implements Charabia {
         return bag.getMyBag().size();
     }
 
-    /**
-     * Calculates the player score of the proposed word
-     *
-     * @param player
-     */
-    private void calculatScor(Player player) {
-        char[] charWord = player.getWordProposed().toCharArray();
-        for (int i = 0; i < charWord.length; i++) {
-            player.addScore(this.bag.getScorAt(charWord[i]));
+    @Override
+    public Player getCurrentPlayer() {
+        return players.get(current);
+    }
+
+    @Override
+    public void wordNotFound() {
+        if (this.bag.getMyBag().size() < 10 && this.bag.getMyBag().size() > 0) {
+            List<Tile> myTiles = new ArrayList<>();
+            myTiles.addAll(bag.getMyBag());
+            myTiles.addAll(table.getMyTable());
+            if (!findWordDico(myTiles)) {
+                gameOver = true;
+            }
         }
     }
 
+    @Override
+    public String findBestWord() {
+        String ret = "";
+        int max = 0;
+        int maxScor = 0;
+
+        for (String s : dictionnary.getMyDico()) {
+            if (this.ifFindWord(table.getMyTable(), s)) {
+                if (s.length() >= max && calculatScor(s) >= maxScor) {
+                    max = s.length();
+                    maxScor = calculatScor(s);
+                    ret = s;
+                }
+            }
+        }
+        return ret;
+    }
+
     /**
-     * compare the size of the word and return the list of the players who find
-     * the longest word
+     * calculates the score of the received word
      *
-     * @param playerOne propose his word
-     * @param playerTwo propose his word
+     * @param word received
+     * @return the score of the word
+     */
+    private int calculatScor(String word) {
+        char[] charWord = word.toCharArray();
+        int scor = 0;
+        for (int i = 0; i < charWord.length; i++) {
+            scor += this.bag.getScorAt(charWord[i]);
+        }
+        return scor;
+    }
+
+    /**
+     * compares the size of the word propose by the player and returns the list
+     * of the player who has the longest word
+     *
+     * @param playerOne first player
+     * @param playerTwo second player
+     * @return the list of the player who has the longest word
      */
     private List<Player> RoundWinnersFind(Player playerOne, Player playerTwo) {
         List<Player> playerWinner = new ArrayList();
@@ -177,19 +214,13 @@ public class CharabiaGame implements Charabia {
     }
 
     /**
-     * compare the size of the word and return the winner calculate his SCORE
+     * calculate the score of the players winning the round
      *
-     * @param playerOne propose his word
-     * @param playerTwo propose his word
+     * @param winner list player winner round
      */
-    private void compareSize(Player playerOne, Player playerTwo) {
-        if (playerOne.getWordProposed().length() > playerTwo.getWordProposed().length()) {
-            calculatScor(playerOne);
-        } else if (playerOne.getWordProposed().length() < playerTwo.getWordProposed().length()) {
-            calculatScor(playerTwo);
-        } else {
-            calculatScor(playerOne);
-            calculatScor(playerTwo);
+    private void calculatScorWinner(List<Player> winner) {
+        for (Player pp : winner) {
+            pp.addScore(calculatScor(pp.getWordProposed()));
         }
     }
 
@@ -206,10 +237,7 @@ public class CharabiaGame implements Charabia {
                 count++;
             }
         }
-        if (count == 2) {
-            isAll = true;
-        }
-        return isAll;
+        return (count == 2);
     }
 
     /**
@@ -221,13 +249,8 @@ public class CharabiaGame implements Charabia {
         }
     }
 
-    @Override
-    public Player getCurrentPlayer() {
-        return players.get(current);
-    }
-
     /**
-     * Returns the next player.
+     * pass to the next player.
      */
     private void nextPlayer() {
         current++;
@@ -245,23 +268,6 @@ public class CharabiaGame implements Charabia {
         }
     }
 
-    public void setGameOver() {
-        this.gameOver = true;
-    }
-
-    @Override
-    public void wordNotFound() {
-        if (this.bag.getMyBag().size() < 10 && this.bag.getMyBag().size() > 0) {
-            List<Tile> myTiles = new ArrayList<>();
-            myTiles.addAll(bag.getMyBag());
-            myTiles.addAll(table.getMyTable());
-
-            if (!findWordDico(myTiles)) {
-                setGameOver();
-            }
-        }
-    }
-
     /**
      * receives a list and checks if a dictionary word is found in the list
      *
@@ -269,73 +275,22 @@ public class CharabiaGame implements Charabia {
      * @return if find word in List
      */
     private boolean findWordDico(List<Tile> ll) {
-        String test = "";
         boolean find = false;
-        for (Tile tt : ll) {
-            test += tt.getChar();
-        }
         for (String s : dictionnary.getMyDico()) {
-            /*if (test.contains(s)) {               //reverifier 
-                find = true;
-            }*/
-            if (this.ifExists(ll , s)) {
+            if (this.ifFindWord(ll, s)) {
                 find = true;
             }
         }
         return find;
     }
 
-    @Override
-    public String recherchBestWord() { // Geré le meilleur Score !!!!!!!!!!!!! 
-        //String test = "";
-        String ret = "";
-        /*for (Tile tt : table.getMyTable()) {
-            test += tt.getChar();
-        }*/
-        List<String> monTest = new ArrayList<>();
-        for (String s : dictionnary.getMyDico()) {
-            /*if (test.contains(s)) {
-                monTest.add(s);
-            }*/
-            if (this.ifExists(table.getMyTable(), s)) {
-                monTest.add(s);
-            }
-        }
-        int max = 0;
-        for (int i = 0; i < monTest.size(); i++) {
-            if (monTest.get(i).length() > max) {
-                max = monTest.get(i).length();
-                ret = monTest.get(i);
-            }
-        }
-        return ret;
-    }
-
-    @Override
-    public String recherchMinWord() { // a SUPPPP 
-        String test = "";
-        String ret = "";
-        for (Tile tt : table.getMyTable()) {
-            test += tt.getChar();
-        }
-        for (String s : dictionnary.getMyDico()) {
-            /*if (test.contains(s)) {
-                ret = s;
-            }*/
-            if (this.ifExists(table.getMyTable(), s)) {
-                ret = s;
-            }
-        }
-        return ret;
-    }
-    
-     /**
-     * returns a boolean that says if the proposed word exists in the table
+    /**
+     * returns a boolean that says if the proposed word exists in the List
      *
-     * @param word
-     * @return boolean
+     * @param word proposed word
+     * @return boolean word if exists
      */
-    private boolean ifExists(List<Tile> list , String word) {           //MODIF DOC
+    private boolean ifFindWord(List<Tile> list, String word) {
         if (word == null) {
             throw new IllegalArgumentException("word cannot be null");
         }

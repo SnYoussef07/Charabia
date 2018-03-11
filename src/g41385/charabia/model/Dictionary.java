@@ -9,13 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * game dictionary
  *
  * @author 41385
  */
 class Dictionary {
 
-    private List<String> myDico;
-    private File file = new File("Dictionary");
+    private final List<String> myDico;
+    private final File file = new File("Dictionary");
     private String path = file.getAbsolutePath();
     private BufferedReader br;
 
@@ -50,10 +51,10 @@ class Dictionary {
     }
 
     /**
-     * return a boolean if the word is find
+     * return a boolean if the word is find in the dictionary
      *
-     * @param word
-     * @return
+     * @param the word to find
+     * @return if he finds it
      */
     boolean findWord(String word) {
         if (word == null) {
@@ -72,7 +73,7 @@ class Dictionary {
     /**
      * Return myDico
      *
-     * @return List<String
+     * @return List<String copy of the Dico
      */
     List<String> getMyDico() {
         List<String> copyDico = this.myDico;

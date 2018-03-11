@@ -24,7 +24,7 @@ public class Player {
     /**
      * Return Name
      *
-     * @return String
+     * @return String name
      */
     public String getName() {
         return name;
@@ -33,7 +33,7 @@ public class Player {
     /**
      * Return Score
      *
-     * @return int
+     * @return int score
      */
     public int getScore() {
         return score;
@@ -41,14 +41,14 @@ public class Player {
 
     /**
      * Return wordProposed
-     * @return String
+     * @return String word Proposed
      */
     public String getWordProposed() {
         return wordProposed;
     }
     /**
      * set word proposed
-     * @param wordProposed 
+     * @param wordProposed new word proposed
      */
     void setWordProposed(String wordProposed) {
         this.wordProposed = wordProposed;
@@ -57,7 +57,7 @@ public class Player {
     /**
      * Increment the scor.
      *
-     * @param score
+     * @param score new value
      */
     void addScore(int score) {
         if (score < 0) {
@@ -68,12 +68,15 @@ public class Player {
 
     /**
      * Return isplay
-     * @return boolean
+     * @return boolean isplay
      */
     boolean getIsPlay() {
         return isPlay;
     }
-
+    /**
+     * set is player is play
+     * @param isPlay new value
+     */
     void setIsPlay(boolean isPlay) {
         this.isPlay = isPlay;
     }

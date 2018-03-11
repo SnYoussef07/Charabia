@@ -45,16 +45,6 @@ public interface Charabia {
      */
     public List<Player> getPlayers() ;
     
-    /** 
-     * Gets the list of current tiles from which players search for the best word.
-     * 
-     * Game state must be STARTED.
-     * 
-     * @return the list of current tiles.
-     * @throws IllegalStateException when game state is not STARTED
-     */
-    public Table getTiles();
-
     /**
      * A player proposes a word.
      * Game must be in state STARTED.
@@ -140,7 +130,10 @@ public interface Charabia {
      */
     public void wordNotFound();
     
-    
-    public String recherchBestWord(); /// method de test
-    public String recherchMinWord(); /// method de test
+    /**
+     * She sends the best word find in the table
+     * @return best word find
+     */
+    public String findBestWord(); 
+
 }

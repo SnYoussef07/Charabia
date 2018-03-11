@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package g41385.charabia.view;
 
 import g41385.charabia.model.Charabia;
@@ -14,7 +9,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author snsmaug
+ * @author 41385
  */
 public class CharabiaView {
 
@@ -68,21 +63,16 @@ public class CharabiaView {
         System.out.println("                              "
                 + "[_" + charabiaGame.getCurrentPlayer().getName()
                 + "_] Proposer votre -Mot- ou -pass- pour passer votre tour");
-        System.out.println("Le meilleur mot est === " + charabiaGame.recherchBestWord()); // A enlever 
-        System.out.println("Le mot DISPONNIBLE MIN === " + charabiaGame.recherchMinWord()); // A enlever 
         String p1Word;
-        p1Word = charabiaGame.recherchMinWord();
         while (ok) {
             System.out.print("*** ");
-            //p1Word = sc.nextLine();
+            p1Word = sc.nextLine();
             if (charabiaGame.isPlay(p1Word)) {
                 ok = false;
                 charabiaGame.play(charabiaGame.getCurrentPlayer(), p1Word);
             } else {
                 System.out.println("Mot introuvable dans le Dictionnaire"
                         + " OU dans la Table !!!");
-                
-                p1Word = "pass"; // A enlever
             }
         }
         ok = true;
@@ -149,7 +139,7 @@ public class CharabiaView {
         boolean ok = true;
         int countWin = 0;
         while (!charabiaGame.isGameOver()) {
-            charabiaGame.wordNotFound(); // BUG ICIIIIIIIIIIIIIII
+            charabiaGame.wordNotFound(); 
             if (charabiaGame.isRoundOver()) {
                 countWin = 0;
                 displayRoundOver(countWin);

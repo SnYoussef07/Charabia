@@ -8,10 +8,10 @@ import java.util.List;
  *
  * @author 41385
  */
-class Table {
+final class Table {
 
-    private List<Tile> myTable;
-    private Bag bag;
+    private final List<Tile> myTable;
+    private final Bag bag;
     private boolean ifNotFull;
 
     /**
@@ -35,52 +35,16 @@ class Table {
     }
 
     /**
-     * returns a boolean that says if the proposed word exists in the table
+     * refresh the table according to the winner's word
      *
-     * @param word
-     * @return boolean
-     */
-    /*boolean ifExists(String word) {         //dEPLACER DANS CHARABIA gAME
-        if (word == null) {
-            throw new IllegalArgumentException("word cannot be null");
-        }
-        char[] charWord = word.toCharArray();
-        List<Character> copyTableCHar = new ArrayList();
-        boolean okProfond = false;
-        boolean okFacade = true;
-        for (Tile tt : myTable) {
-            copyTableCHar.add(tt.getChar());
-        }
-        if (charWord.length <= myTable.size()) {
-            for (int i = 0; i < charWord.length; i++) {
-                for (int j = 0; j < copyTableCHar.size(); j++) {
-                    if (charWord[i] == copyTableCHar.get(j)) {
-                        okProfond = true;
-                        copyTableCHar.remove(j);
-                        break;
-                    }
-                }
-                if (okProfond == false) {
-                    okFacade = false;
-                }
-                okProfond = false;
-            }
-        }
-        return okFacade;
-    }*/
-
-    /**
-     * refresh the table according to the winner's word If no player can find a
-     * word, reset the table
-     *
-     * @param winWord
+     * @param winWord winner's word of the player
      */
     void refreshTable(String winWord) {
         if (winWord == null) {
             throw new IllegalArgumentException("winWord cannot be null");
         }
         char[] charWord = winWord.toCharArray();
-        if (!"".equals(winWord)){
+        if (!"".equals(winWord)) {
             for (int i = 0; i < charWord.length; i++) {
                 for (int j = 0; j < this.myTable.size(); j++) {
                     if (charWord[i] == myTable.get(j).getChar()) {
@@ -90,12 +54,16 @@ class Table {
                 }
             }
         } else {
-            for (Tile tt : myTable) {
-                bag.getMyBag().add(tt);
-            }
-            myTable.clear();
-            initTable();
+            resetTable();
         }
+        ifTableFilled();
+    }
+
+    /**
+     * if the table can be filled we fill it up to the size of 10
+     * Otherwise we change the attribute ifNotFull.
+     */
+    private void ifTableFilled() {
         if (((bag.getMyBag().size()) + (myTable.size())) < 10) {
             ifNotFull = true;
         } else {
@@ -103,6 +71,17 @@ class Table {
                 myTable.add(bag.draw());
             }
         }
+    }
+
+    /**
+     * if both players pass the turn, reset the table
+     */
+    private void resetTable() {
+        for (Tile tt : myTable) {
+            bag.getMyBag().add(tt);
+        }
+        myTable.clear();
+        initTable();
     }
 
     /**
@@ -116,8 +95,7 @@ class Table {
     }
 
     /**
-     * rETURN IFnOTfULL
-     *
+     * Return ifNotFull
      * @return Boolean
      */
     boolean getIfNotFull() {
