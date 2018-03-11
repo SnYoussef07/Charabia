@@ -183,7 +183,7 @@ public class CharabiaGame implements Charabia {
      * @param word received
      * @return the score of the word
      */
-    private int calculatScor(String word) {
+    public int calculatScor(String word) {
         char[] charWord = word.toCharArray();
         int scor = 0;
         for (int i = 0; i < charWord.length; i++) {
@@ -287,10 +287,11 @@ public class CharabiaGame implements Charabia {
     /**
      * returns a boolean that says if the proposed word exists in the List
      *
+     * @param list
      * @param word proposed word
      * @return boolean word if exists
      */
-    private boolean ifFindWord(List<Tile> list, String word) {
+    public boolean ifFindWord(List<Tile> list, String word) {
         if (word == null) {
             throw new IllegalArgumentException("word cannot be null");
         }
@@ -317,6 +318,8 @@ public class CharabiaGame implements Charabia {
             }
         }
         return okFacade;
+    }   
+    public Bag getBag(){
+        return this.bag;
     }
-
 }

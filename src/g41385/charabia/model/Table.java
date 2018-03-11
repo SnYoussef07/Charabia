@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author 41385
  */
-final class Table {
+class Table {
 
     private final List<Tile> myTable;
     private final Bag bag;
