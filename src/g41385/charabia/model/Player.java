@@ -70,7 +70,7 @@ public class Player {
      * Return isplay
      * @return boolean isplay
      */
-    boolean getIsPlay() {
+    public boolean getIsPlay() {
         return isPlay;
     }
     /**

@@ -135,5 +135,7 @@ public interface Charabia {
      * @return best word find
      */
     public String findBestWord(); 
+    
+    public State getState();
 
 }

@@ -322,4 +322,7 @@ public class CharabiaGame implements Charabia {
     public Bag getBag(){
         return this.bag;
     }
+    public State getState(){
+        return this.state;
+    }
 }
