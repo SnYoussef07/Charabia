@@ -4,6 +4,7 @@ import g41385.charabia.model.Charabia;
 import g41385.charabia.model.CharabiaGame;
 import g41385.charabia.model.State;
 import g41385.charabia.model.Tile;
+import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,13 +48,14 @@ public class GameView extends BorderPane {
         hboxPlay = new HBox();
 
         initPlayer();
-        
+
         initTable();
-        
+
         initPLay();
     }
 
     public void initPlayer() {
+        vboxPlayers.getChildren().clear();
         Label nameOne = new Label("name = " + charabia.getPlayers().get(0).getName() + " || ");
         Label nameTwo = new Label("name = " + charabia.getPlayers().get(1).getName() + " || ");
         Label scoreOne = new Label("Score = " + charabia.getPlayers().get(0).getScore());
@@ -68,52 +70,64 @@ public class GameView extends BorderPane {
     }
 
     public void initTable() {
+        hboxTable.getChildren().clear();
         List<VBox> hboxTiles = new ArrayList();
-        
+
         String pathCar = null;
         String pathNum = null;
 
         for (Tile tt : charabia.getListTile()) {
-            pathCar = "sourcCharabia/"+tt.getChar()+".png";
-            pathNum = "sourcCharabia/"+tt.getScoring()+".png";
+            pathCar = "sourcCharabia/" + tt.getChar() + ".png";
+            pathNum = "sourcCharabia/" + tt.getScoring() + ".png";
 
-            hboxTiles.add(new VBox(new ImageView(new Image(new File(pathCar).toURI().toString())) ,
+            hboxTiles.add(new VBox(new ImageView(new Image(new File(pathCar).toURI().toString())),
                     new ImageView(new Image(new File(pathNum).toURI().toString()))));
         }
-        
-        for(VBox hh : hboxTiles){
+
+        for (VBox hh : hboxTiles) {
             hh.setAlignment(Pos.CENTER);
             hh.setSpacing(-7);
         }
-        
+
         hboxTable.getChildren().addAll(hboxTiles);
         this.setCenter(hboxTable);
         hboxTable.setAlignment(Pos.CENTER);
         hboxTable.setSpacing(5);
     }
-    
-    
-    
-    
-    public void initPLay(){
+
+    public void initPLay() {
         fieldWord.setPromptText(charabia.findBestWord());
-        hboxPlay.getChildren().addAll(fieldWord,proposedWord);
+        hboxPlay.getChildren().addAll(fieldWord, proposedWord);
         hboxPlay.setAlignment(Pos.BOTTOM_CENTER);
         this.setBottom(hboxPlay);
         hboxPlay.setPadding(new Insets(20, 20, 20, 20));
-        
-        
+
         proposedWord.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
-                if(charabia.isPlay(fieldWord.getText())){
-                  charabia.play(charabia.getCurrentPlayer(), fieldWord.getText());  
-                }else{
-                    System.out.println("Ta maman en slip");
+                if (charabia.isPlay(fieldWord.getText())) {
+                    charabia.play(charabia.getCurrentPlayer(), fieldWord.getText());
+                    fieldWord.setEditable(false);
+                    proposedWord.setDisable(true);
+                    fieldWord.setStyle("-fx-background-color: rgba(11, 198, 68, .8);");
+                    
+                    if (charabia.isRoundOver()) {
+                        charabia.nextRound();
+                        roundOver();
+                        initPlayer();
+                        initTable();
+                    }
+
+                } else {
+                    fieldWord.setStyle("-fx-background-color: rgba(243, 0, 0, .8);");
                 }
-               
+
             }
         });
-        
+
+    }
+
+    public void roundOver() {
+        this.getChildren().clear();
     }
 }
