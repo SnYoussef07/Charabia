@@ -17,39 +17,23 @@ import static org.junit.Assert.*;
  */
 public class CharabiaGameTest {
     
-    /**
-     * Test of calculatScor method, of class CharabiaGame.
-     */
-    @Test
-    public void testCalculatScor() throws IOException {
-        System.out.println("calculatScor");
-        String word = "ABC";
-        CharabiaGame instance = new CharabiaGame();
-        int expResult = 0;
-        expResult += instance.getBag().getScorAt('A');
-        expResult += instance.getBag().getScorAt('B');
-        expResult += instance.getBag().getScorAt('C');
-        
-        int result = instance.calculatScor(word);
-        assertEquals(expResult, result);
-    }
 
     /**
-     * Test of ifFindWord method, of class CharabiaGame.
+     * Test of isWordPossible method, of class CharabiaGame.
      */
     @Test
     public void testIfFindWord() throws IOException {
         System.out.println("if FindWord");
         List<Tile> list = new ArrayList<>();
         String word = "AHT";
-        list.add(new Tile(new MyCharacter('C'), 2));
-        list.add(new Tile(new MyCharacter('H'), 2));
-        list.add(new Tile(new MyCharacter('A'), 2));
-        list.add(new Tile(new MyCharacter('T'), 2));
+        list.add(new Tile('C', 2));
+        list.add(new Tile('H', 2));
+        list.add(new Tile('A', 2));
+        list.add(new Tile('T', 2));
         
         CharabiaGame instance = new CharabiaGame();
 
-        boolean result = instance.ifFindWord(list, word);
+        boolean result = instance.isWordPossible(list, word);
         assertTrue(result);
     }
     
@@ -61,14 +45,14 @@ public class CharabiaGameTest {
         System.out.println("if Not FindWord");
         List<Tile> list = new ArrayList<>();
         String word = "ALT";
-        list.add(new Tile(new MyCharacter('C'), 2));
-        list.add(new Tile(new MyCharacter('H'), 2));
-        list.add(new Tile(new MyCharacter('A'), 2));
-        list.add(new Tile(new MyCharacter('T'), 2));
+        list.add(new Tile('C', 2));
+        list.add(new Tile('H', 2));
+        list.add(new Tile('A', 2));
+        list.add(new Tile('T', 2));
         
         CharabiaGame instance = new CharabiaGame();
 
-        boolean result = instance.ifFindWord(list, word);
+        boolean result = instance.isWordPossible(list, word);
         assertFalse(result);
     }
     

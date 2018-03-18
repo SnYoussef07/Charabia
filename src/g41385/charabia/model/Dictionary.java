@@ -16,9 +16,6 @@ import java.util.List;
 class Dictionary {
 
     private final List<String> myDico;
-    private final File file = new File("Dictionary");
-    private String path = file.getAbsolutePath();
-    private BufferedReader br;
 
     Dictionary() throws FileNotFoundException, IOException {
         this.myDico = new ArrayList();
@@ -32,6 +29,9 @@ class Dictionary {
      * @throws IOException
      */
     private void initDictionary() throws FileNotFoundException, IOException {
+        File file = new File("Dictionary");
+        String path = file.getAbsolutePath();
+        BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(path += ".txt"));
             String line;
@@ -75,8 +75,8 @@ class Dictionary {
      *
      * @return List<String copy of the Dico
      */
-    List<String> getMyDico() {
-        List<String> copyDico = this.myDico;
+    List<String> getAllWords() {
+        List<String> copyDico = new ArrayList(myDico);
         return copyDico;
     }
 }

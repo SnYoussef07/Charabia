@@ -21,7 +21,7 @@ public class CharabiaView {
     }
 
     public String displayTile(Tile tile) {
-        return "[" + tile.getChar() + "||" + tile.getScoring() + "]";
+        return "[" + tile.getLetter() + "||" + tile.getPoints() + "]";
     }
 
     public String displayTable() {
@@ -58,10 +58,10 @@ public class CharabiaView {
         System.out.println("__________________________" + '\n');
     }
 
-    public void displayPlay(boolean ok) {
+    public void displayPlayOne(boolean ok) {
         System.out.println(displayTable());
         System.out.println("                              "
-                + "[_" + charabiaGame.getCurrentPlayer().getName()
+                + "[_" + charabiaGame.getPlayers().get(0).getName()
                 + "_] Proposer votre -Mot- ou -pass- pour passer votre tour");
         String p1Word;
         while (ok) {
@@ -69,7 +69,26 @@ public class CharabiaView {
             p1Word = sc.nextLine();
             if (charabiaGame.isPlay(p1Word)) {
                 ok = false;
-                charabiaGame.play(charabiaGame.getCurrentPlayer(), p1Word);
+                charabiaGame.play(charabiaGame.getPlayers().get(0), p1Word);
+            } else {
+                System.out.println("Mot introuvable dans le Dictionnaire"
+                        + " OU dans la Table !!!");
+            }
+        }
+        ok = true;
+    }
+       public void displayPlayTwo(boolean ok) {
+        System.out.println(displayTable());
+        System.out.println("                              "
+                + "[_" + charabiaGame.getPlayers().get(1).getName()
+                + "_] Proposer votre -Mot- ou -pass- pour passer votre tour");
+        String p1Word = null;
+        while (ok) {
+            System.out.print("*** ");
+            p1Word = sc.nextLine();
+            if (charabiaGame.isPlay(p1Word)) {
+                ok = false;
+                charabiaGame.play(charabiaGame.getPlayers().get(1), p1Word);
             } else {
                 System.out.println("Mot introuvable dans le Dictionnaire"
                         + " OU dans la Table !!!");
@@ -139,13 +158,15 @@ public class CharabiaView {
         boolean ok = true;
         int countWin = 0;
         while (!charabiaGame.isGameOver()) {
-            charabiaGame.wordNotFound(); 
+            //charabiaGame.wordNotFound(); 
             if (charabiaGame.isRoundOver()) {
                 countWin = 0;
                 displayRoundOver(countWin);
                 charabiaGame.nextRound();
-            } else {
-                displayPlay(ok);
+            } else if(!charabiaGame.getPlayers().get(0).getIsPlay()){
+                displayPlayOne(ok);
+            } else if (!charabiaGame.getPlayers().get(1).getIsPlay()){
+                displayPlayTwo(ok);
             }
         }
         displayWinner();

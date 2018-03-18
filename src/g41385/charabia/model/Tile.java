@@ -6,34 +6,29 @@ package g41385.charabia.model;
  */
 public class Tile {
 
-    private final MyCharacter letter;
-    private final  int scoring;
+    private final char letter;
+    private final  int points;
 
     /**
      * Cnnstruct class Tile
      * @param letter
      * @param scoring 
      */
-    public Tile(MyCharacter letter, int scoring) {
-        if (letter == null || scoring < 0) {
-            throw new IllegalArgumentException("letter cannot be null and scoring cannot be less than");
+    public Tile(char letter, int scoring) {
+        if (scoring < 0) {
+            throw new IllegalArgumentException("scoring cannot be less than");
         }
         this.letter = letter;
-        this.scoring = scoring;
+        this.points = scoring;
     }
     /**
-     * Return letter
-     * @return MyCharacter
-     */
-    MyCharacter getLetter() {return letter;}
-    /**
-     * Return scoring
+     * Return points
      * @return int
      */
-    public int getScoring() {return scoring;}
+    public int getPoints() {return points;}
     /**
      * Return character Tile
      * @return Char
      */
-    public char getChar(){return this.letter.getMyLetter();}
+    public char getLetter(){return this.letter;}
 }

@@ -77,8 +77,8 @@ public class GameView extends BorderPane {
         String pathNum = null;
 
         for (Tile tt : charabia.getListTile()) {
-            pathCar = "sourcCharabia/" + tt.getChar() + ".png";
-            pathNum = "sourcCharabia/" + tt.getScoring() + ".png";
+            pathCar = "sourcCharabia/" + tt.getLetter() + ".png";
+            pathNum = "sourcCharabia/" + tt.getPoints() + ".png";
 
             hboxTiles.add(new VBox(new ImageView(new Image(new File(pathCar).toURI().toString())),
                     new ImageView(new Image(new File(pathNum).toURI().toString()))));
@@ -96,13 +96,19 @@ public class GameView extends BorderPane {
     }
 
     public void initPLay() {
+        if (charabia.isRoundOver()) {
+            charabia.nextRound();
+            roundOver();
+            initPlayer();
+            initTable();
+        }
         fieldWord.setPromptText(charabia.findBestWord());
         hboxPlay.getChildren().addAll(fieldWord, proposedWord);
         hboxPlay.setAlignment(Pos.BOTTOM_CENTER);
         this.setBottom(hboxPlay);
         hboxPlay.setPadding(new Insets(20, 20, 20, 20));
 
-        proposedWord.setOnAction(new EventHandler<ActionEvent>() {
+        /*proposedWord.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
                 if (charabia.isPlay(fieldWord.getText())) {
@@ -110,20 +116,13 @@ public class GameView extends BorderPane {
                     fieldWord.setEditable(false);
                     proposedWord.setDisable(true);
                     fieldWord.setStyle("-fx-background-color: rgba(11, 198, 68, .8);");
-                    
-                    if (charabia.isRoundOver()) {
-                        charabia.nextRound();
-                        roundOver();
-                        initPlayer();
-                        initTable();
-                    }
 
                 } else {
                     fieldWord.setStyle("-fx-background-color: rgba(243, 0, 0, .8);");
                 }
 
             }
-        });
+        });*/
 
     }
 

@@ -119,23 +119,12 @@ public interface Charabia {
     public int numberTiles();
     
     /**
-     * Returns the current player.
-     *
-     * @return Player.
-     */
-    public Player getCurrentPlayer();
-    /**
-     * If towards the end of the game, the Bag and the table together
-     * can no longer form a word, then stop the game
-     */
-    public void wordNotFound();
-    
-    /**
      * She sends the best word find in the table
      * @return best word find
      */
     public String findBestWord(); 
     
     public State getState();
+    public Bag getBag();
 
 }

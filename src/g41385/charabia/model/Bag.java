@@ -1,9 +1,11 @@
 package g41385.charabia.model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import java.util.Scanner;
 
 /**
  * represents the bag of the game
@@ -12,56 +14,39 @@ import java.util.Random;
  */
 class Bag {
 
-    private final List<Tile> myBag;
-    private int nbrRandom;
-    private MyCharacter myChar;
-
+    private final List<Tile> tiles;
     /**
      * Cnnstruct class Bag
      */
-    Bag() {
-        this.myBag = new ArrayList();
+    Bag() throws FileNotFoundException {
+        this.tiles = new ArrayList();
         initBag();
     }
 
     /**
      * initialize the Bag
      */
-    private void initBag() {
-        Random rand = new Random();
-        for (int i = 65; i < 90; i++) {
-            myChar = new MyCharacter((char) i);
-            nbrRandom = 1 + (int) (Math.random() * ((10 - 1) + 1));
-            for (int j = 0; j < myChar.getMultip(); j++) {
-                this.myBag.add(new Tile(myChar, nbrRandom));
-            }
-        }
-    }
+    private void initBag() throws FileNotFoundException {
+        File file = new File("letters.txt");
+        Scanner readLetters = new Scanner(file);
+        readLetters.useDelimiter(",");
+        while (readLetters.hasNext()) {
+            String letter = readLetters.next();
+            String count = readLetters.next();
+            String score = readLetters.next();
 
-    /**
-     * returns the Tile value according to the received character
-     *
-     * @param myChar
-     * @return
-     */
-    int getScorAt(char myChar) {
-        if (myChar == ' ') {
-            throw new IllegalArgumentException("myChar cannot be null");
-        }
-        int scoring = 0;
-        for (Tile tt : myBag) {
-            if (tt.getChar() == myChar) {
-                scoring = tt.getScoring();
+            for (int i = 0; i < Integer.parseInt(count); i++) {
+                tiles.add(new Tile(letter.charAt(0), Integer.parseInt(score)));
             }
         }
-        return scoring;
+        shuffle();
     }
 
     /**
      * Allows to mix the bag
      */
-    void shuffle() {
-        Collections.shuffle(myBag);
+    private void shuffle() {
+        Collections.shuffle(tiles);
     }
 
     /**
@@ -70,7 +55,7 @@ class Bag {
      * @return Tile
      */
     Tile draw() {
-        return this.myBag.remove(0);
+        return this.tiles.remove(0);
     }
 
     /**
@@ -79,33 +64,16 @@ class Bag {
      * @return boolean
      */
     boolean bagIsEmpty() {
-        return this.myBag.isEmpty();
+        return this.tiles.isEmpty();
     }
 
     /**
-     * Adds a character and the number of times it appears
-     *
-     * @param letter to add
-     * @param multip number of times
-     */
-    void addTile(char letter, int multip) {
-        if (multip < 0 || letter == ' ') {
-            throw new IllegalArgumentException("multip is negative and letter can not be empty");
-        }
-        myChar = new MyCharacter(letter);
-        nbrRandom = 1 + (int) (Math.random() * ((10 - 1) + 1));
-        for (int i = 0; i < multip; i++) {
-            this.myBag.add(new Tile(new MyCharacter(letter), nbrRandom));
-        }
-    }
-
-    /**
-     * Return myBag
+     * Return tiles
      *
      * @return List<Tile copy of the bag
      */
     List<Tile> getMyBag() {
-        List<Tile> tile = this.myBag;
+        List<Tile> tile = new ArrayList(this.tiles);
         return tile;
     }
 }

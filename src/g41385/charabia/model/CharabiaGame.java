@@ -17,7 +17,6 @@ public class CharabiaGame implements Charabia {
     private final Dictionary dictionnary;
     private State state;
     private final List<Player> players;
-    private int current;
     private boolean gameOver;
 
     public CharabiaGame() throws FileNotFoundException, IOException {
@@ -26,7 +25,6 @@ public class CharabiaGame implements Charabia {
         this.table = new Table(bag);
         this.dictionnary = new Dictionary();
         this.state = State.CONFIGURE;
-        current = 0;
         gameOver = false;
     }
 
@@ -46,7 +44,6 @@ public class CharabiaGame implements Charabia {
             if (!"pass".equals(word)) {
                 player.setWordProposed(word);
             }
-            nextPlayer();
         }
         if (isAllPlayerPLay()) {
             state = State.ROUND_OVER;
@@ -57,7 +54,7 @@ public class CharabiaGame implements Charabia {
     @Override
     public boolean isPlay(String word) {
         boolean play = false;
-        if ((this.ifFindWord(table.getMyTable(), word) && dictionnary.findWord(word)) || word.equals("pass")) {
+        if ((this.isWordPossible(table.getMyTable(), word) && dictionnary.findWord(word)) || word.equals("pass")) {
             play = true;
         }
         return play;
@@ -95,7 +92,7 @@ public class CharabiaGame implements Charabia {
             throw new IllegalStateException("is game is not in ROUND_OVER state");
         }
 
-        table.refreshTable(getRoundWinners().get(current).getWordProposed());
+        table.refreshTable(getRoundWinners().get(0).getWordProposed());
         if (table.getIfNotFull()) {
             state = State.GAME_OVER;
         } else {
@@ -117,7 +114,7 @@ public class CharabiaGame implements Charabia {
 
     @Override
     public boolean isGameOver() {
-        if (bag.bagIsEmpty() || (state.equals(State.GAME_OVER))) {
+        if (bag.bagIsEmpty() || (state.equals(State.GAME_OVER)) || wordNotFound()) {
             gameOver = true;
         }
         return gameOver;
@@ -142,21 +139,21 @@ public class CharabiaGame implements Charabia {
         return bag.getMyBag().size();
     }
 
-    @Override
-    public Player getCurrentPlayer() {
-        return players.get(current);
-    }
-
-    @Override
-    public void wordNotFound() {
+    /**
+     * If towards the end of the game, the Bag and the table together can no
+     * longer form a word, then stop the game
+     */
+    private boolean wordNotFound() {
+        boolean notFound = false;
         if (this.bag.getMyBag().size() < 10 && this.bag.getMyBag().size() > 0) {
             List<Tile> myTiles = new ArrayList<>();
             myTiles.addAll(bag.getMyBag());
             myTiles.addAll(table.getMyTable());
             if (!findWordDico(myTiles)) {
-                gameOver = true;
+                notFound = true;
             }
         }
+        return notFound;
     }
 
     @Override
@@ -165,31 +162,16 @@ public class CharabiaGame implements Charabia {
         int max = 0;
         int maxScor = 0;
 
-        for (String s : dictionnary.getMyDico()) {
-            if (this.ifFindWord(table.getMyTable(), s)) {
-                if (s.length() >= max && calculatScor(s) >= maxScor) {
+        for (String s : dictionnary.getAllWords()) {
+            if (this.isWordPossible(table.getMyTable(), s)) {
+                if (s.length() >= max && this.table.getScore(s) >= maxScor) {
                     max = s.length();
-                    maxScor = calculatScor(s);
+                    maxScor = this.table.getScore(s);
                     ret = s;
                 }
             }
         }
         return ret;
-    }
-
-    /**
-     * calculates the score of the received word
-     *
-     * @param word received
-     * @return the score of the word
-     */
-    public int calculatScor(String word) {
-        char[] charWord = word.toCharArray();
-        int scor = 0;
-        for (int i = 0; i < charWord.length; i++) {
-            scor += this.bag.getScorAt(charWord[i]);
-        }
-        return scor;
     }
 
     /**
@@ -220,7 +202,7 @@ public class CharabiaGame implements Charabia {
      */
     private void calculatScorWinner(List<Player> winner) {
         for (Player pp : winner) {
-            pp.addScore(calculatScor(pp.getWordProposed()));
+            pp.addScore(this.table.getScore(pp.getWordProposed()));
         }
     }
 
@@ -250,16 +232,6 @@ public class CharabiaGame implements Charabia {
     }
 
     /**
-     * pass to the next player.
-     */
-    private void nextPlayer() {
-        current++;
-        if (this.current > this.players.size() - 1) {
-            this.current = 0;
-        }
-    }
-
-    /**
      * refresh the player's name for the next round
      */
     private void refrshWord() {
@@ -276,8 +248,8 @@ public class CharabiaGame implements Charabia {
      */
     private boolean findWordDico(List<Tile> ll) {
         boolean find = false;
-        for (String s : dictionnary.getMyDico()) {
-            if (this.ifFindWord(ll, s)) {
+        for (String s : dictionnary.getAllWords()) {
+            if (this.isWordPossible(ll, s)) {
                 find = true;
             }
         }
@@ -291,7 +263,7 @@ public class CharabiaGame implements Charabia {
      * @param word proposed word
      * @return boolean word if exists
      */
-    public boolean ifFindWord(List<Tile> list, String word) {
+    public boolean isWordPossible(List<Tile> list, String word) {
         if (word == null) {
             throw new IllegalArgumentException("word cannot be null");
         }
@@ -300,7 +272,7 @@ public class CharabiaGame implements Charabia {
         boolean okProfond = false;
         boolean okFacade = true;
         for (Tile tt : list) {
-            copyTableCHar.add(tt.getChar());
+            copyTableCHar.add(tt.getLetter());
         }
         if (charWord.length <= list.size()) {
             for (int i = 0; i < charWord.length; i++) {
@@ -318,11 +290,16 @@ public class CharabiaGame implements Charabia {
             }
         }
         return okFacade;
-    }   
-    public Bag getBag(){
+    }
+
+    public Table getTable(){
+        return this.table;
+    }
+    public Bag getBag() {
         return this.bag;
     }
-    public State getState(){
+
+    public State getState() {
         return this.state;
     }
 }
