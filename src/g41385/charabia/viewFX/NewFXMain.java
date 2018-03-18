@@ -21,7 +21,7 @@ import javafx.stage.Stage;
  */
 public class NewFXMain extends Application {
 
-    private Charabia charabia;
+    private CharabiaGame charabia;
     Scene sceneGameOne;
     Scene sceneGameTwo;
 
@@ -59,9 +59,9 @@ public class NewFXMain extends Application {
                 if (charabia.getState().equals(State.CONFIGURE)) {
                     sceneMenuOne.setRoot(waitOne);
                 } else if (charabia.getState().equals(State.STARTED)) {
-                    GameView gameOne = new GameView(charabia);
+                    GameView gameOne = new GameView(charabia,charabia.getPlayers().get(0));
                     sceneGameOne = new Scene(gameOne, 1280, 900);
-                    GameView gameTwo = new GameView(charabia);
+                    GameView gameTwo = new GameView(charabia,charabia.getPlayers().get(1));
                     sceneGameTwo = new Scene(gameTwo, 1280, 900);
 
                     primaryStage.setScene(sceneGameOne);
@@ -78,9 +78,9 @@ public class NewFXMain extends Application {
                 if (charabia.getState().equals(State.CONFIGURE)) {
                     sceneMenuTwo.setRoot(waitTwo);
                 } else if (charabia.getState().equals(State.STARTED)) {
-                    GameView gameOne = new GameView(charabia);
+                    GameView gameOne = new GameView(charabia,charabia.getPlayers().get(0));
                     sceneGameOne = new Scene(gameOne, 1280,900);
-                    GameView gameTwo = new GameView(charabia);
+                    GameView gameTwo = new GameView(charabia,charabia.getPlayers().get(1));
                     sceneGameTwo = new Scene(gameTwo, 1280,900);
                     
                     primaryStage.setScene(sceneGameOne);

@@ -1,5 +1,7 @@
 package g41385.charabia.model;
 
+import g41385.charabia.observer.Observable;
+import g41385.charabia.observer.Observer;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,8 +12,9 @@ import java.util.List;
  *
  * @author 41385
  */
-public class CharabiaGame implements Charabia {
+public class CharabiaGame implements Charabia ,Observable{
 
+     private final List<Observer> observers;
     private final Table table;
     private final Bag bag;
     private final Dictionary dictionnary;
@@ -20,6 +23,8 @@ public class CharabiaGame implements Charabia {
     private boolean gameOver;
 
     public CharabiaGame() throws FileNotFoundException, IOException {
+        
+        observers = new ArrayList<>();
         this.players = new ArrayList<>();
         this.bag = new Bag();
         this.table = new Table(bag);
@@ -301,5 +306,27 @@ public class CharabiaGame implements Charabia {
 
     public State getState() {
         return this.state;
+    }
+
+    
+    @Override
+    public void registerObserver(Observer obs) {
+        if (!observers.contains(obs)) {
+            observers.add(obs);
+        }
+    }
+
+    @Override
+    public void removeObserver(Observer obs) {
+        if (observers.contains(obs)) {
+            observers.remove(obs);
+        }
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer obs : observers) {
+            obs.update();
+        }
     }
 }

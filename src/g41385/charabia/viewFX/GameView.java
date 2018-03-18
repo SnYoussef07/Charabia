@@ -2,8 +2,10 @@ package g41385.charabia.viewFX;
 
 import g41385.charabia.model.Charabia;
 import g41385.charabia.model.CharabiaGame;
+import g41385.charabia.model.Player;
 import g41385.charabia.model.State;
 import g41385.charabia.model.Tile;
+import g41385.charabia.observer.Observer;
 import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
@@ -26,9 +28,9 @@ import javafx.scene.layout.VBox;
  *
  * @author snsmaug
  */
-public class GameView extends BorderPane {
+public class GameView extends BorderPane implements Observer {
 
-    private Charabia charabia;
+    private CharabiaGame charabia;
     private HBox hboxPlayerOne;
     private HBox hboxPlayerTwo;
     private VBox vboxPlayers;
@@ -36,8 +38,9 @@ public class GameView extends BorderPane {
     private TextField fieldWord;
     private Button proposedWord;
     private HBox hboxPlay;
+    private Player playerTest;
 
-    public GameView(Charabia charabia) {
+    public GameView(CharabiaGame charabia, Player player) {
         this.charabia = charabia;
         hboxPlayerOne = new HBox();
         hboxPlayerTwo = new HBox();
@@ -46,6 +49,8 @@ public class GameView extends BorderPane {
         fieldWord = new TextField();
         proposedWord = new Button(">");
         hboxPlay = new HBox();
+        playerTest = player;
+        this.charabia.registerObserver(this);
 
         initPlayer();
 
@@ -96,37 +101,47 @@ public class GameView extends BorderPane {
     }
 
     public void initPLay() {
-        if (charabia.isRoundOver()) {
-            charabia.nextRound();
-            roundOver();
-            initPlayer();
-            initTable();
-        }
+
         fieldWord.setPromptText(charabia.findBestWord());
         hboxPlay.getChildren().addAll(fieldWord, proposedWord);
         hboxPlay.setAlignment(Pos.BOTTOM_CENTER);
         this.setBottom(hboxPlay);
         hboxPlay.setPadding(new Insets(20, 20, 20, 20));
 
-        /*proposedWord.setOnAction(new EventHandler<ActionEvent>() {
+        proposedWord.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
                 if (charabia.isPlay(fieldWord.getText())) {
-                    charabia.play(charabia.getCurrentPlayer(), fieldWord.getText());
+                    charabia.play(playerTest, fieldWord.getText());
                     fieldWord.setEditable(false);
                     proposedWord.setDisable(true);
                     fieldWord.setStyle("-fx-background-color: rgba(11, 198, 68, .8);");
-
                 } else {
                     fieldWord.setStyle("-fx-background-color: rgba(243, 0, 0, .8);");
                 }
+                if (charabia.isRoundOver()) {
+                    charabia.nextRound();
+                    roundOver();
+                    initPlayer();
+                    initTable();
+                }
 
             }
-        });*/
+        });
 
     }
 
     public void roundOver() {
         this.getChildren().clear();
+    }
+
+    @Override
+    public void update() {
+        /*if (unoGame.isOver()) {
+            this.isWin();
+        }
+        this.tableView.refreshTable();
+        this.handView.refreshHand();
+        this.playerInfoView.refreshInfoPlayer();*/
     }
 }
