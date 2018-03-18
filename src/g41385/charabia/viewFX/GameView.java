@@ -31,10 +31,10 @@ import javafx.scene.layout.VBox;
 public class GameView extends BorderPane implements Observer {
 
     private CharabiaGame charabia;
-    private HBox hboxPlayerOne;
-    private HBox hboxPlayerTwo;
-    private VBox vboxPlayers;
-    private HBox hboxTable;
+
+    private TableFx tableFx;
+    private PlayerFx playerFx;
+
     private TextField fieldWord;
     private Button proposedWord;
     private HBox hboxPlay;
@@ -42,62 +42,19 @@ public class GameView extends BorderPane implements Observer {
 
     public GameView(CharabiaGame charabia, Player player) {
         this.charabia = charabia;
-        hboxPlayerOne = new HBox();
-        hboxPlayerTwo = new HBox();
-        vboxPlayers = new VBox();
-        hboxTable = new HBox();
+
+        tableFx = new TableFx(charabia);
+        this.setCenter(tableFx);
+        playerFx = new PlayerFx(charabia);
+        this.setTop(playerFx);
+
         fieldWord = new TextField();
         proposedWord = new Button(">");
         hboxPlay = new HBox();
         playerTest = player;
         this.charabia.registerObserver(this);
 
-        initPlayer();
-
-        initTable();
-
         initPLay();
-    }
-
-    public void initPlayer() {
-        vboxPlayers.getChildren().clear();
-        Label nameOne = new Label("name = " + charabia.getPlayers().get(0).getName() + " || ");
-        Label nameTwo = new Label("name = " + charabia.getPlayers().get(1).getName() + " || ");
-        Label scoreOne = new Label("Score = " + charabia.getPlayers().get(0).getScore());
-        Label scoreTwo = new Label("Score = " + charabia.getPlayers().get(1).getScore());
-
-        hboxPlayerOne.getChildren().addAll(nameOne, scoreOne);
-        hboxPlayerTwo.getChildren().addAll(nameTwo, scoreTwo);
-        vboxPlayers.getChildren().addAll(hboxPlayerOne, hboxPlayerTwo);
-        this.setTop(vboxPlayers);
-        hboxPlayerOne.setAlignment(Pos.TOP_CENTER);
-        hboxPlayerTwo.setAlignment(Pos.TOP_CENTER);
-    }
-
-    public void initTable() {
-        hboxTable.getChildren().clear();
-        List<VBox> hboxTiles = new ArrayList();
-
-        String pathCar = null;
-        String pathNum = null;
-
-        for (Tile tt : charabia.getListTile()) {
-            pathCar = "sourcCharabia/" + tt.getLetter() + ".png";
-            pathNum = "sourcCharabia/" + tt.getPoints() + ".png";
-
-            hboxTiles.add(new VBox(new ImageView(new Image(new File(pathCar).toURI().toString())),
-                    new ImageView(new Image(new File(pathNum).toURI().toString()))));
-        }
-
-        for (VBox hh : hboxTiles) {
-            hh.setAlignment(Pos.CENTER);
-            hh.setSpacing(-7);
-        }
-
-        hboxTable.getChildren().addAll(hboxTiles);
-        this.setCenter(hboxTable);
-        hboxTable.setAlignment(Pos.CENTER);
-        hboxTable.setSpacing(5);
     }
 
     public void initPLay() {
@@ -119,13 +76,6 @@ public class GameView extends BorderPane implements Observer {
                 } else {
                     fieldWord.setStyle("-fx-background-color: rgba(243, 0, 0, .8);");
                 }
-                if (charabia.isRoundOver()) {
-                    charabia.nextRound();
-                    roundOver();
-                    initPlayer();
-                    initTable();
-                }
-
             }
         });
 
@@ -137,11 +87,20 @@ public class GameView extends BorderPane implements Observer {
 
     @Override
     public void update() {
-        /*if (unoGame.isOver()) {
-            this.isWin();
-        }
-        this.tableView.refreshTable();
-        this.handView.refreshHand();
-        this.playerInfoView.refreshInfoPlayer();*/
+        /*if(charabia.isGameOver()){
+            
+        }*/
+        /*if (charabia.isRoundOver()) {
+            charabia.nextRound();
+            fieldWord.setEditable(true);
+            proposedWord.setDisable(false);
+            tableFx.refreshTable();
+            playerFx.refreshPlayers();
+        }*/
+        /*fieldWord.setEditable(true);
+        proposedWord.setDisable(false);
+        charabia.nextRound();
+        tableFx.refreshTable();
+        playerFx.refreshPlayers();*/
     }
 }

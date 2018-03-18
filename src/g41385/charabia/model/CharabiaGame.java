@@ -53,6 +53,7 @@ public class CharabiaGame implements Charabia ,Observable{
         if (isAllPlayerPLay()) {
             state = State.ROUND_OVER;
             calculatScorWinner(RoundWinnersFind(players.get(0), players.get(1)));
+            this.notifyObservers();                     //n
         }
     }
 
@@ -100,10 +101,12 @@ public class CharabiaGame implements Charabia ,Observable{
         table.refreshTable(getRoundWinners().get(0).getWordProposed());
         if (table.getIfNotFull()) {
             state = State.GAME_OVER;
+            this.notifyObservers();                 //n
         } else {
             this.refrshWord();
             state = State.STARTED;
             resetIsPlay();
+            //this.notifyObservers();                 //n
         }
 
     }
@@ -122,6 +125,7 @@ public class CharabiaGame implements Charabia ,Observable{
         if (bag.bagIsEmpty() || (state.equals(State.GAME_OVER)) || wordNotFound()) {
             gameOver = true;
         }
+        this.notifyObservers();                     //n
         return gameOver;
     }
 
