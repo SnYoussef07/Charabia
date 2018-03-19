@@ -16,10 +16,9 @@ import javafx.scene.layout.BorderPane;
 public class WaitOtherPlayer extends BorderPane {
 
     private Image image;
-    private Background background;
 
     public WaitOtherPlayer() {
-        image = new Image(new File("sourcCharabia/sablier.png").toURI().toString());
+        image = new Image(new File("sourcCharabia/sablier.gif").toURI().toString());
         
         BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
 

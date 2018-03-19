@@ -8,11 +8,18 @@ package g41385.charabia.viewFX;
 import g41385.charabia.model.Charabia;
 import g41385.charabia.model.CharabiaGame;
 import g41385.charabia.model.State;
+import java.io.File;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
 
 /**
@@ -37,6 +44,7 @@ public class NewFXMain extends Application {
 
         MenuGame menuGameOne = new MenuGame();
         MenuGame menuGameTwo = new MenuGame();
+        backgroundMenuGame(menuGameOne, menuGameTwo);
 
         WaitOtherPlayer waitOne = new WaitOtherPlayer();
         WaitOtherPlayer waitTwo = new WaitOtherPlayer();
@@ -89,6 +97,22 @@ public class NewFXMain extends Application {
             }
         });
 
+    }
+
+    public void backgroundMenuGame(MenuGame menuGameOne, MenuGame menuGameTwo) {
+        Image imageOne = new Image(new File("sourcCharabia/fond1.png").toURI().toString());
+        Image imageTwo = new Image(new File("sourcCharabia/fond2.png").toURI().toString());
+        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+        menuGameOne.setBackground(new Background(new BackgroundImage(imageOne,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                bSize)));
+        menuGameTwo.setBackground(new Background(new BackgroundImage(imageTwo,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                bSize)));
     }
 
     /**

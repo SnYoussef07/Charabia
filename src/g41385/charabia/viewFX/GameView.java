@@ -1,28 +1,16 @@
 package g41385.charabia.viewFX;
 
-import g41385.charabia.model.Charabia;
 import g41385.charabia.model.CharabiaGame;
 import g41385.charabia.model.Player;
-import g41385.charabia.model.State;
-import g41385.charabia.model.Tile;
 import g41385.charabia.observer.Observer;
-import java.awt.Color;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
 /**
  *
@@ -34,6 +22,7 @@ public class GameView extends BorderPane implements Observer {
 
     private TableFx tableFx;
     private PlayerFx playerFx;
+    private BagFx bagFx;
 
     private TextField fieldWord;
     private Button proposedWord;
@@ -47,12 +36,15 @@ public class GameView extends BorderPane implements Observer {
         this.setCenter(tableFx);
         playerFx = new PlayerFx(charabia);
         this.setTop(playerFx);
+        bagFx = new BagFx(charabia);
+        this.setLeft(bagFx);
 
         fieldWord = new TextField();
-        proposedWord = new Button(">");
+        proposedWord = new Button("Proposer");
         hboxPlay = new HBox();
         playerTest = player;
         this.charabia.registerObserver(this);
+        
 
         initPLay();
     }
@@ -90,13 +82,15 @@ public class GameView extends BorderPane implements Observer {
         /*if(charabia.isGameOver()){
             
         }*/
-        /*if (charabia.isRoundOver()) {
+        if (charabia.isRoundOver()) {
             charabia.nextRound();
             fieldWord.setEditable(true);
             proposedWord.setDisable(false);
             tableFx.refreshTable();
             playerFx.refreshPlayers();
-        }*/
+            bagFx.refreshBag();
+        }
+        
         /*fieldWord.setEditable(true);
         proposedWord.setDisable(false);
         charabia.nextRound();

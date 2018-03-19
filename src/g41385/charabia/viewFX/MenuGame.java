@@ -16,14 +16,18 @@ public class MenuGame extends BorderPane {
 
     private TextField nameFieldOne;
     private HBox hboxNameOne;
+    private HBox hboxTitle;
     private HBox hboxButton;
     private Button buttonPlay;
+    private Label title;
 
     public MenuGame() {
         nameFieldOne = new TextField();
         buttonPlay = new Button("Play");
         hboxNameOne = new HBox();
         hboxButton = new HBox();
+        hboxTitle = new HBox();
+        title = new Label("Charabia.");
         initMenu();
     }
 
@@ -31,26 +35,35 @@ public class MenuGame extends BorderPane {
         Label nameOne = new Label("Nom : ");
         hboxNameOne.getChildren().addAll(nameOne, nameFieldOne);
         hboxButton.getChildren().add(buttonPlay);
+        hboxTitle.getChildren().add(title);
 
-        hboxNameOne.setStyle("-fx-background-color: #FFFFFF;");
-        hboxButton.setStyle("-fx-background-color: #046380;");
-
+        this.setTop(hboxTitle);
         this.setCenter(hboxNameOne);
         this.setBottom(hboxButton);
 
+        hboxTitle.setAlignment(Pos.TOP_CENTER);
         hboxNameOne.setAlignment(Pos.CENTER);
         hboxNameOne.setPadding(new Insets(0, 20, 0, 0));
+        hboxTitle.setPadding(new Insets(80, 0, 0, 0));
 
         hboxButton.setAlignment(Pos.BOTTOM_CENTER);
         hboxButton.setPadding(new Insets(0, 0, 10, 0));
+
+        title.setStyle("-fx-font-size: 50px;\n"
+                + "-fx-font-weight: bold;\n"
+                +"-fx-text-fill: #FFFFFF;\n"
+                + "-fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );");
+        nameOne.setStyle("-fx-font-size: 15px;\n"
+                + "-fx-font-weight: bold;\n"
+                +"-fx-text-fill: #FFFFFF;\n"
+                + "-fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );");
     }
-    
-    public Button getButton(){
+
+    public Button getButton() {
         return this.buttonPlay;
     }
-    
-    public String getName(){
+
+    public String getName() {
         return nameFieldOne.getText();
     }
 }
-

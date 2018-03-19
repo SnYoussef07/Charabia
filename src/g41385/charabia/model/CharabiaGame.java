@@ -94,21 +94,21 @@ public class CharabiaGame implements Charabia ,Observable{
 
     @Override
     public void nextRound() {
-        if (state != State.ROUND_OVER) {
+        if (!state.equals(State.ROUND_OVER)) {
             throw new IllegalStateException("is game is not in ROUND_OVER state");
         }
 
         table.refreshTable(getRoundWinners().get(0).getWordProposed());
         if (table.getIfNotFull()) {
             state = State.GAME_OVER;
-            this.notifyObservers();                 //n
+            //this.notifyObservers();                 //n
         } else {
             this.refrshWord();
             state = State.STARTED;
             resetIsPlay();
             //this.notifyObservers();                 //n
         }
-
+        //this.notifyObservers();                 //n
     }
 
     @Override

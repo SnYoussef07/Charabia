@@ -124,6 +124,7 @@ public interface Charabia {
      */
     public String findBestWord(); 
     
+    
     public State getState();
     public Bag getBag();
 
