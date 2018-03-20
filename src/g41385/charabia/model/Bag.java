@@ -66,6 +66,12 @@ class Bag {
     boolean bagIsEmpty() {
         return this.tiles.isEmpty();
     }
+    /**
+     * Add tile into Bag
+     */
+    void addTile(Tile tile){
+        this.tiles.add(tile);
+    }
 
     /**
      * Return tiles

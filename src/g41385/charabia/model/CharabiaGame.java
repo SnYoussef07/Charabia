@@ -53,7 +53,8 @@ public class CharabiaGame implements Charabia ,Observable{
         if (isAllPlayerPLay()) {
             state = State.ROUND_OVER;
             calculatScorWinner(RoundWinnersFind(players.get(0), players.get(1)));
-            this.notifyObservers();                     //n
+            //this.notifyObservers();                     //n
+            nextRound();
         }
     }
 
@@ -108,7 +109,7 @@ public class CharabiaGame implements Charabia ,Observable{
             resetIsPlay();
             //this.notifyObservers();                 //n
         }
-        //this.notifyObservers();                 //n
+        this.notifyObservers();                 //n
     }
 
     @Override

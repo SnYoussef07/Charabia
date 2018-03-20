@@ -77,7 +77,7 @@ class Table {
      */
     private void resetTable() {
         for (Tile tt : myTable) {
-            bag.getMyBag().add(tt);
+            bag.addTile(tt);
         }
         myTable.clear();
         initTable();

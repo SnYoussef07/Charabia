@@ -23,6 +23,7 @@ public class GameView extends BorderPane implements Observer {
     private TableFx tableFx;
     private PlayerFx playerFx;
     private BagFx bagFx;
+    private PlayFx playFx;
 
     private TextField fieldWord;
     private Button proposedWord;
@@ -38,38 +39,11 @@ public class GameView extends BorderPane implements Observer {
         this.setTop(playerFx);
         bagFx = new BagFx(charabia);
         this.setLeft(bagFx);
+        playFx = new PlayFx(charabia, player);
+        this.setBottom(playFx);
 
-        fieldWord = new TextField();
-        proposedWord = new Button("Proposer");
-        hboxPlay = new HBox();
         playerTest = player;
         this.charabia.registerObserver(this);
-        
-
-        initPLay();
-    }
-
-    public void initPLay() {
-
-        fieldWord.setPromptText(charabia.findBestWord());
-        hboxPlay.getChildren().addAll(fieldWord, proposedWord);
-        hboxPlay.setAlignment(Pos.BOTTOM_CENTER);
-        this.setBottom(hboxPlay);
-        hboxPlay.setPadding(new Insets(20, 20, 20, 20));
-
-        proposedWord.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent t) {
-                if (charabia.isPlay(fieldWord.getText())) {
-                    charabia.play(playerTest, fieldWord.getText());
-                    fieldWord.setEditable(false);
-                    proposedWord.setDisable(true);
-                    fieldWord.setStyle("-fx-background-color: rgba(11, 198, 68, .8);");
-                } else {
-                    fieldWord.setStyle("-fx-background-color: rgba(243, 0, 0, .8);");
-                }
-            }
-        });
 
     }
 
@@ -82,19 +56,21 @@ public class GameView extends BorderPane implements Observer {
         /*if(charabia.isGameOver()){
             
         }*/
-        if (charabia.isRoundOver()) {
+ /*if (charabia.isRoundOver()) {
             charabia.nextRound();
             fieldWord.setEditable(true);
             proposedWord.setDisable(false);
             tableFx.refreshTable();
             playerFx.refreshPlayers();
             bagFx.refreshBag();
-        }
-        
-        /*fieldWord.setEditable(true);
-        proposedWord.setDisable(false);
-        charabia.nextRound();
+        }*/
+
+        //charabia.nextRound();
         tableFx.refreshTable();
-        playerFx.refreshPlayers();*/
+        playerFx.refreshPlayers();
+        bagFx.refreshBag();
+        playFx.refreshPlay();
+        //fieldWord.setEditable(true);
+        //proposedWord.setDisable(false);
     }
 }
