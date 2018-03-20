@@ -25,9 +25,6 @@ public class GameView extends BorderPane implements Observer {
     private BagFx bagFx;
     private PlayFx playFx;
 
-    private TextField fieldWord;
-    private Button proposedWord;
-    private HBox hboxPlay;
     private Player playerTest;
 
     public GameView(CharabiaGame charabia, Player player) {
@@ -64,13 +61,10 @@ public class GameView extends BorderPane implements Observer {
             playerFx.refreshPlayers();
             bagFx.refreshBag();
         }*/
-
-        //charabia.nextRound();
+        
         tableFx.refreshTable();
         playerFx.refreshPlayers();
         bagFx.refreshBag();
         playFx.refreshPlay();
-        //fieldWord.setEditable(true);
-        //proposedWord.setDisable(false);
     }
 }

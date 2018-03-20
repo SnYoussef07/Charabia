@@ -24,27 +24,8 @@ public class PlayFx extends HBox {
     public PlayFx(Charabia game, Player player) {
         charabia = game;
         this.player = player;
-        /*fieldWord = new TextField();
-        proposedWord = new Button("Proposer");
-        this.getChildren().addAll(fieldWord, proposedWord);
-        this.setAlignment(Pos.BOTTOM_CENTER);
-        this.setPadding(new Insets(20, 20, 20, 20));*/
-        myPlay();
 
-        
-        /*proposedWord.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent t) {
-                if (charabia.isPlay(fieldWord.getText())) {
-                    charabia.play(player, fieldWord.getText());
-                    //fieldWord.setEditable(false);
-                    //proposedWord.setDisable(true);
-                    fieldWord.setStyle("-fx-background-color: rgba(11, 198, 68, .8);");
-                } else {
-                    fieldWord.setStyle("-fx-background-color: rgba(243, 0, 0, .8);");
-                }
-            }
-        });*/
+        myPlay();
 
     }
 
@@ -52,12 +33,14 @@ public class PlayFx extends HBox {
         this.getChildren().clear();
         fieldWord = new TextField();
         fieldWord.setPromptText(charabia.findBestWord());
-        
         proposedWord = new Button("Proposer");
+        fieldWord.setEditable(true);
+        proposedWord.setDisable(false);
+
         this.getChildren().addAll(fieldWord, proposedWord);
         this.setAlignment(Pos.BOTTOM_CENTER);
         this.setPadding(new Insets(20, 20, 20, 20));
-        
+
         proposedWord.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
@@ -69,8 +52,16 @@ public class PlayFx extends HBox {
                 } else {
                     fieldWord.setStyle("-fx-background-color: rgba(243, 0, 0, .8);");
                 }
+                if (charabia.getPlayers().get(1).getIsPlay()) {
+                    fieldWord.clear();
+                    fieldWord.setEditable(true);
+                    proposedWord.setDisable(false);
+                }
             }
         });
+        //fieldWord.setStyle("-fx-background-color: rgb(255, 255, 255);");
+        //fieldWord.setEditable(true);
+        //proposedWord.setDisable(false);
 
     }
 
