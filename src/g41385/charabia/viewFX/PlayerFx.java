@@ -36,8 +36,9 @@ public class PlayerFx extends VBox {
         hboxPlayerOne.getChildren().addAll(nameOne, scoreOne);
         hboxPlayerTwo.getChildren().addAll(nameTwo, scoreTwo);
         this.getChildren().addAll(hboxPlayerOne, hboxPlayerTwo);
-        hboxPlayerOne.setAlignment(Pos.TOP_CENTER);
-        hboxPlayerTwo.setAlignment(Pos.TOP_CENTER);
+        hboxPlayerOne.setAlignment(Pos.CENTER_RIGHT);
+        hboxPlayerTwo.setAlignment(Pos.CENTER_RIGHT);
+        this.setAlignment(Pos.CENTER);
     }
     
     public void refreshPlayers() {

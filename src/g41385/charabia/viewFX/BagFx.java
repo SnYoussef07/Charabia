@@ -39,6 +39,7 @@ public class BagFx extends VBox {
 
     public void myBag() {
         this.getChildren().clear();
+        
         ImageView imageView = new ImageView(image);
         this.getChildren().add(imageView);
         size.setText("" + charabia.numberTiles());

@@ -52,6 +52,8 @@ public class NewFXMain extends Application {
 
         Scene sceneMenuOne = new Scene(menuGameOne, 600, 400);
         Scene sceneMenuTwo = new Scene(menuGameTwo, 600, 400);
+        primaryStage.setResizable(false);
+        secondaryStage.setResizable(false);
 
 
         primaryStage.setScene(sceneMenuOne);
