@@ -45,7 +45,8 @@ public class BagFx extends VBox {
         size.setText("" + charabia.numberTiles());
         this.getChildren().add(size);
         this.setAlignment(Pos.CENTER);
-        this.setPadding(new Insets(0, -120, 0, 10));
+        //this.setPadding(new Insets(0, -120, 0, 10));
+        this.setPadding(new Insets(0, 0, 0, 10));
     }
 
     public void refreshBag() {

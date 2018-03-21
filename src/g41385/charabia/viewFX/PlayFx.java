@@ -22,24 +22,17 @@ public class PlayFx extends HBox {
     private Player player;
     private TextField fieldWord;
     private Button proposedWord;
-    //private Label word;
     private Alert alert;
 
     public PlayFx(Charabia game, Player player) {
         charabia = game;
         this.player = player;
-        //this.word = new Label();
         alert = new Alert(Alert.AlertType.INFORMATION);
 
         myPlay();
 
     }
 
-//    public void vitfait() {
-//        this.getChildren().clear();
-//        word.setText(fieldWord.getText());
-//        this.getChildren().add(word);
-//    }
     public void myPlay() {
         this.getChildren().clear();
 
@@ -61,17 +54,17 @@ public class PlayFx extends HBox {
         proposedWord.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
-
                 if (charabia.isPlay(fieldWord.getText())) {
+                    //charabia.play(player, charabia.findBestWord()); //// TEST
                     charabia.play(player, fieldWord.getText());
+                    fieldWord.clear();
+                    fieldWord.setEditable(false);
+                    proposedWord.setDisable(true);
                     if (charabia.isRoundOver()) {
-                        //alert.showAndWait();
+                        alert.showAndWait();
                         charabia.nextRound();
                     }
-                    /*fieldWord.setEditable(false);
-                    proposedWord.setDisable(true);*/
                     fieldWord.setStyle("-fx-background-color: rgba(11, 198, 68, .8);");
-
                 } else {
                     fieldWord.setStyle("-fx-background-color: rgba(243, 0, 0, .8);");
                 }

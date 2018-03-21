@@ -8,9 +8,13 @@ import java.util.List;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
 
 /**
  *
@@ -26,11 +30,20 @@ public class TableFx extends HBox {
     public TableFx(Charabia game) {
         charabia = game;
         hboxTiles = new ArrayList();
-        
-        this.setAlignment(Pos.CENTER);
-        this.setSpacing(5);
-        
+        this.setMaxWidth(850);
+        addBackground();
+
         myTable();
+    }
+
+    private void addBackground() {
+        Image image = new Image(new File("sourcCharabia/charabiaTable.png").toURI().toString());
+        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+        this.setBackground(new Background(new BackgroundImage(image,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                bSize)));
     }
 
     private void myTable() {
@@ -38,8 +51,7 @@ public class TableFx extends HBox {
         for (VBox hh : hboxTiles) {
             hh.getChildren().clear();
         }
-        
-        
+
         for (Tile tt : charabia.getListTile()) {
             pathCar = "sourcCharabia/" + tt.getLetter() + ".png";
             pathNum = "sourcCharabia/" + tt.getPoints() + ".png";
@@ -52,8 +64,9 @@ public class TableFx extends HBox {
             hh.setSpacing(-7);
         }
         this.getChildren().addAll(hboxTiles);
+        this.setAlignment(Pos.CENTER);
     }
-    
+
     public void refreshTable() {
         myTable();
     }

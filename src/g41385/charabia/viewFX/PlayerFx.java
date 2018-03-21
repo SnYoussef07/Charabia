@@ -1,6 +1,7 @@
 package g41385.charabia.viewFX;
 
 import g41385.charabia.model.Charabia;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -39,6 +40,7 @@ public class PlayerFx extends VBox {
         hboxPlayerOne.setAlignment(Pos.CENTER_RIGHT);
         hboxPlayerTwo.setAlignment(Pos.CENTER_RIGHT);
         this.setAlignment(Pos.CENTER);
+        this.setPadding(new Insets(0, 10, 0, 00));
     }
     
     public void refreshPlayers() {
