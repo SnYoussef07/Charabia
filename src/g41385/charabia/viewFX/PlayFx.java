@@ -27,22 +27,14 @@ public class PlayFx extends HBox {
     public PlayFx(Charabia game, Player player) {
         charabia = game;
         this.player = player;
+
         alert = new Alert(Alert.AlertType.INFORMATION);
 
         myPlay();
-
     }
 
     public void myPlay() {
         this.getChildren().clear();
-
-        alert.setTitle("Fin Du Rounde");
-        String gagant = "Les gg du round sont : " + '\n';
-        for (Player pp : charabia.getRoundWinners()) {
-            gagant += pp.getName() + " avec un score de " + pp.getScore() + '\n';
-        }
-        alert.setHeaderText(gagant);
-
         fieldWord = new TextField();
         fieldWord.setPromptText(charabia.findBestWord());
         proposedWord = new Button("Proposer");
@@ -54,22 +46,38 @@ public class PlayFx extends HBox {
         proposedWord.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
-                if (charabia.isPlay(fieldWord.getText())) {
-                    //charabia.play(player, charabia.findBestWord()); //// TEST
-                    charabia.play(player, fieldWord.getText());
-                    fieldWord.clear();
+                //if (charabia.isPlay(fieldWord.getText())) {
+                    charabia.play(player, charabia.findBestWord()); //// TEST
+                    //charabia.play(player, fieldWord.getText());
                     fieldWord.setEditable(false);
                     proposedWord.setDisable(true);
                     if (charabia.isRoundOver()) {
-                        alert.showAndWait();
+                        roundOver();
                         charabia.nextRound();
                     }
-                    fieldWord.setStyle("-fx-background-color: rgba(11, 198, 68, .8);");
-                } else {
-                    fieldWord.setStyle("-fx-background-color: rgba(243, 0, 0, .8);");
-                }
+                    fieldWord.setText(fieldWord.getText());
+                //} else {
+                //    fieldWord.setText("Mot Introuvable");
+                //}
             }
         });
+    }
+
+    private void roundOver() {
+        int countwin = 0;
+        alert.setTitle("Fin Du Rounde");
+        String gagant = "Les Gagnants du Round : " + '\n';
+        for (Player pp : charabia.getRoundWinners()) {
+            if (!"".equals(pp.getWordProposed())) {
+                gagant += "[" + pp.getName() + "] |_| Score [" + pp.getScore() + "] " + "Mot proposer [" + pp.getWordProposed() + "]" + '\n';
+                countwin++;
+            }
+        }
+        if (countwin == 0) {
+            gagant += "Aucun Gagnants dans ce Round";
+        }
+        alert.setHeaderText(gagant);
+        alert.showAndWait();
     }
 
     public void refreshPlay() {

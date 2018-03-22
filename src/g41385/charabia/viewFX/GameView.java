@@ -59,7 +59,7 @@ public class GameView extends BorderPane implements Observer {
 
     }
 
-    private void displayGame() {
+    private void displayGame() { //#419b1a
         currentHbox = new HBox();
         currentPlayer = new Label(playerTest.getName());
         currentHbox.getChildren().add(currentPlayer);
@@ -68,15 +68,15 @@ public class GameView extends BorderPane implements Observer {
         currentHbox.setPadding(new Insets(170, 0, 0, 0));
         currentPlayer.setStyle("-fx-font-size: 30px;\n"
                 + "-fx-font-weight: bold;\n"
-                + "-fx-text-fill:  #419b1a ;\n"
+                + "-fx-text-fill:  #000000 ;\n"
                 + "-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.8) , 0,0,0,1 );");
-        /*Image image = new Image(new File("sourcCharabia/fondGame.png").toURI().toString());
+        Image image = new Image(new File("sourcCharabia/fondGame.jpg").toURI().toString());
         BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
         this.setBackground(new Background(new BackgroundImage(image,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER,
-                bSize)));*/
+                bSize)));
     }
 
     @Override
@@ -105,7 +105,7 @@ public class GameView extends BorderPane implements Observer {
         Label myLabel = new Label("Bravo au Gagnant !");
         myLabel.setStyle("-fx-font-size: 25px;\n"
                     + "-fx-font-weight: bold;\n"
-                    + "-fx-text-fill:  #419b1a ;\n"
+                    + "-fx-text-fill:  #FFFFFF ;\n"
                     + "-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.8) , 0,0,0,1 );");
         
         winnersVbox.getChildren().add(myLabel);
@@ -116,7 +116,7 @@ public class GameView extends BorderPane implements Observer {
         for(Label label : winners){
             label.setStyle("-fx-font-size: 25px;\n"
                     + "-fx-font-weight: bold;\n"
-                    + "-fx-text-fill:  #419b1a ;\n"
+                    + "-fx-text-fill:  #FFFFFF ;\n"
                     + "-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.8) , 0,0,0,1 );");
         }
         this.setCenter(winnersVbox);

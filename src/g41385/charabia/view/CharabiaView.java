@@ -158,7 +158,6 @@ public class CharabiaView {
         boolean ok = true;
         int countWin = 0;
         while (!charabiaGame.isGameOver()) {
-            //charabiaGame.wordNotFound(); 
             if (charabiaGame.isRoundOver()) {
                 countWin = 0;
                 displayRoundOver(countWin);
