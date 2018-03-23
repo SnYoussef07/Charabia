@@ -3,6 +3,7 @@ package g41385.charabia.model;
 import java.util.List;
 
 /**
+ * Remis 2
  * Represents a game of Charabia.
  * 
  * Charabia is a word game where players must find the longest word 
