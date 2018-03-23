@@ -67,9 +67,9 @@ public class CharabiaGame implements Charabia ,Observable{
 
     @Override
     public List<Player> getRoundWinners() {
-        /*if (state != State.ROUND_OVER) {
+        if (state != State.ROUND_OVER) {
             throw new IllegalStateException("is not in ROUND_OVER state.");
-        }*/
+        }
         return RoundWinnersFind(players.get(0), players.get(1));
 
     }
@@ -105,7 +105,7 @@ public class CharabiaGame implements Charabia ,Observable{
             state = State.STARTED;
             resetIsPlay();
         }
-        this.notifyObservers();                 //n
+        this.notifyObservers();                 
     }
 
     @Override
@@ -122,7 +122,6 @@ public class CharabiaGame implements Charabia ,Observable{
         if (bag.bagIsEmpty() || (state.equals(State.GAME_OVER)) || wordNotFound()) {
             gameOver = true;
         }
-        //this.notifyObservers();                     //n
         return gameOver;
     }
 

@@ -5,7 +5,6 @@
  */
 package g41385.charabia.viewFX;
 
-import g41385.charabia.model.Charabia;
 import g41385.charabia.model.CharabiaGame;
 import g41385.charabia.model.State;
 import java.io.File;
@@ -26,13 +25,13 @@ import javafx.stage.Stage;
  *
  * @author g41385
  */
-public class NewFXMain extends Application {
+public class MainFx extends Application {
 
     private CharabiaGame charabia;
     Scene sceneGameOne;
     Scene sceneGameTwo;
 
-    public NewFXMain() throws IOException {
+    public MainFx() throws IOException {
         charabia = new CharabiaGame();
     }
 
@@ -49,29 +48,37 @@ public class NewFXMain extends Application {
         WaitOtherPlayer waitOne = new WaitOtherPlayer();
         WaitOtherPlayer waitTwo = new WaitOtherPlayer();
 
-
         Scene sceneMenuOne = new Scene(menuGameOne, 600, 400);
         Scene sceneMenuTwo = new Scene(menuGameTwo, 600, 400);
         primaryStage.setResizable(false);
         secondaryStage.setResizable(false);
-
 
         primaryStage.setScene(sceneMenuOne);
         secondaryStage.setScene(sceneMenuTwo);
         primaryStage.show();
         secondaryStage.show();
 
+        gameAction(menuGameOne, sceneMenuOne, waitOne, primaryStage, 
+                secondaryStage, menuGameTwo, sceneMenuTwo, waitTwo);
+
+    }
+
+    private void gameAction(MenuGame menuGameOne, Scene sceneMenuOne, 
+            WaitOtherPlayer waitOne, Stage primaryStage, Stage secondaryStage, 
+            MenuGame menuGameTwo, Scene sceneMenuTwo, WaitOtherPlayer waitTwo) {
+        
         menuGameOne.getButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
                 charabia.joinGame(menuGameOne.getName());
-
                 if (charabia.getState().equals(State.CONFIGURE)) {
                     sceneMenuOne.setRoot(waitOne);
                 } else if (charabia.getState().equals(State.STARTED)) {
-                    GameView gameOne = new GameView(charabia,charabia.getPlayers().get(0));
+                    GameView gameOne = new GameView(charabia, charabia.
+                            getPlayers().get(0));
                     sceneGameOne = new Scene(gameOne, 1280, 900);
-                    GameView gameTwo = new GameView(charabia,charabia.getPlayers().get(1));
+                    GameView gameTwo = new GameView(charabia, charabia.
+                            getPlayers().get(1));
                     sceneGameTwo = new Scene(gameTwo, 1280, 900);
 
                     primaryStage.setScene(sceneGameOne);
@@ -84,27 +91,30 @@ public class NewFXMain extends Application {
             @Override
             public void handle(ActionEvent t) {
                 charabia.joinGame(menuGameTwo.getName());
-
                 if (charabia.getState().equals(State.CONFIGURE)) {
                     sceneMenuTwo.setRoot(waitTwo);
                 } else if (charabia.getState().equals(State.STARTED)) {
-                    GameView gameOne = new GameView(charabia,charabia.getPlayers().get(0));
-                    sceneGameOne = new Scene(gameOne, 1280,900);
-                    GameView gameTwo = new GameView(charabia,charabia.getPlayers().get(1));
-                    sceneGameTwo = new Scene(gameTwo, 1280,900);
-                    
+                    GameView gameOne = new GameView(charabia, charabia.
+                            getPlayers().get(0));
+                    sceneGameOne = new Scene(gameOne, 1280, 900);
+                    GameView gameTwo = new GameView(charabia, charabia.
+                            getPlayers().get(1));
+                    sceneGameTwo = new Scene(gameTwo, 1280, 900);
+
                     primaryStage.setScene(sceneGameOne);
                     secondaryStage.setScene(sceneGameTwo);
                 }
             }
         });
-
     }
 
     public void backgroundMenuGame(MenuGame menuGameOne, MenuGame menuGameTwo) {
-        Image imageOne = new Image(new File("sourcCharabia/fond1.png").toURI().toString());
-        Image imageTwo = new Image(new File("sourcCharabia/fond2.png").toURI().toString());
-        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+        Image imageOne = new Image(new File("sourcCharabia/fond1.png")
+                .toURI().toString());
+        Image imageTwo = new Image(new File("sourcCharabia/fond2.png")
+                .toURI().toString());
+        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, 
+                BackgroundSize.AUTO, false, false, true, false);
         menuGameOne.setBackground(new Background(new BackgroundImage(imageOne,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,

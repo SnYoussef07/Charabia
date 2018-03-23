@@ -9,18 +9,21 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
 /**
- *
+ * represents the game's menu where the player introduces their name.
  * @author 41385
  */
 public class MenuGame extends BorderPane {
 
-    private TextField nameFieldOne;
-    private HBox hboxNameOne;
-    private HBox hboxTitle;
-    private HBox hboxButton;
-    private Button buttonPlay;
-    private Label title;
+    private final TextField nameFieldOne;
+    private final HBox hboxNameOne;
+    private final HBox hboxTitle;
+    private final HBox hboxButton;
+    private final Button buttonPlay;
+    private final Label title;
 
+    /**
+     * Construct MenuGame
+     */
     public MenuGame() {
         nameFieldOne = new TextField();
         buttonPlay = new Button("Play");
@@ -28,9 +31,12 @@ public class MenuGame extends BorderPane {
         hboxButton = new HBox();
         hboxTitle = new HBox();
         title = new Label("Charabia.");
-        initMenu();
+        initMenu(); 
     }
 
+    /**
+     * Display menu Game
+     */
     public void initMenu() {
         Label nameOne = new Label("Nom : ");
         hboxNameOne.getChildren().addAll(nameOne, nameFieldOne);
@@ -52,17 +58,27 @@ public class MenuGame extends BorderPane {
         title.setStyle("-fx-font-size: 50px;\n"
                 + "-fx-font-weight: bold;\n"
                 +"-fx-text-fill: #FFFFFF;\n"
-                + "-fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );");
+                + "-fx-effect: dropshadow( gaussian , "
+                + "rgba(255,255,255,0.5) , 0,0,0,1 );");
         nameOne.setStyle("-fx-font-size: 15px;\n"
                 + "-fx-font-weight: bold;\n"
                 +"-fx-text-fill: #FFFFFF;\n"
-                + "-fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );");
+                + "-fx-effect: dropshadow( gaussian , "
+                + "rgba(255,255,255,0.5) , 0,0,0,1 );");
     }
 
+    /**
+     * returns button of play
+     * @return button
+     */
     public Button getButton() {
         return this.buttonPlay;
     }
 
+    /**
+     * returns the introduced name
+     * @return name
+     */
     public String getName() {
         return nameFieldOne.getText();
     }

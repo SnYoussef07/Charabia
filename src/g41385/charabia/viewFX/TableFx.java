@@ -17,16 +17,22 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
+ * Represents the table with the 10 tiles
  *
  * @author 41385
  */
 public class TableFx extends HBox {
 
-    private List<VBox> hboxTiles;
-    private Charabia charabia;
+    private final List<VBox> hboxTiles;
+    private final Charabia charabia;
     private String pathCar = null;
     private String pathNum = null;
 
+    /**
+     * Construct Table
+     *
+     * @param game instance of CharabiaGame
+     */
     public TableFx(Charabia game) {
         charabia = game;
         hboxTiles = new ArrayList();
@@ -36,9 +42,14 @@ public class TableFx extends HBox {
         myTable();
     }
 
+    /**
+     * Add the background of the table
+     */
     private void addBackground() {
-        Image image = new Image(new File("sourcCharabia/charabiaTable.png").toURI().toString());
-        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+        Image image = new Image(new File("sourcCharabia/charabiaTable.png")
+                .toURI().toString());
+        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, 
+                BackgroundSize.AUTO, false, false, true, false);
         this.setBackground(new Background(new BackgroundImage(image,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
@@ -46,6 +57,9 @@ public class TableFx extends HBox {
                 bSize)));
     }
 
+    /**
+     * Display Table
+     */
     private void myTable() {
         this.getChildren().clear();
         for (VBox hh : hboxTiles) {
@@ -56,8 +70,10 @@ public class TableFx extends HBox {
             pathCar = "sourcCharabia/" + tt.getLetter() + ".png";
             pathNum = "sourcCharabia/" + tt.getPoints() + ".png";
 
-            hboxTiles.add(new VBox(new ImageView(new Image(new File(pathCar).toURI().toString())),
-                    new ImageView(new Image(new File(pathNum).toURI().toString()))));
+            hboxTiles.add(new VBox(new ImageView(new Image(new File(pathCar)
+                    .toURI().toString())),
+                    new ImageView(new Image(new File(pathNum).toURI()
+                            .toString()))));
         }
         for (VBox hh : hboxTiles) {
             hh.setAlignment(Pos.CENTER);
@@ -67,6 +83,9 @@ public class TableFx extends HBox {
         this.setAlignment(Pos.CENTER);
     }
 
+    /**
+     * Refresh Table
+     */
     public void refreshTable() {
         myTable();
     }
