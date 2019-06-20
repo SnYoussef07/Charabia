@@ -76,10 +76,10 @@ public class MainFx extends Application {
                 } else if (charabia.getState().equals(State.STARTED)) {
                     GameView gameOne = new GameView(charabia, charabia.
                             getPlayers().get(0));
-                    sceneGameOne = new Scene(gameOne, 1280, 900);
+                    sceneGameOne = new Scene(gameOne, 1100, 700);
                     GameView gameTwo = new GameView(charabia, charabia.
                             getPlayers().get(1));
-                    sceneGameTwo = new Scene(gameTwo, 1280, 900);
+                    sceneGameTwo = new Scene(gameTwo, 1100, 700);
 
                     primaryStage.setScene(sceneGameOne);
                     secondaryStage.setScene(sceneGameTwo);
@@ -96,10 +96,10 @@ public class MainFx extends Application {
                 } else if (charabia.getState().equals(State.STARTED)) {
                     GameView gameOne = new GameView(charabia, charabia.
                             getPlayers().get(0));
-                    sceneGameOne = new Scene(gameOne, 1280, 900);
+                    sceneGameOne = new Scene(gameOne, 1100, 700);
                     GameView gameTwo = new GameView(charabia, charabia.
                             getPlayers().get(1));
-                    sceneGameTwo = new Scene(gameTwo, 1280, 900);
+                    sceneGameTwo = new Scene(gameTwo, 1100, 700);
 
                     primaryStage.setScene(sceneGameOne);
                     secondaryStage.setScene(sceneGameTwo);
